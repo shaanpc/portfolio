@@ -1,6 +1,6 @@
 import { HeadContent, Link, Outlet, createRootRouteWithContext } from "@tanstack/react-router";
 import type { QueryClient } from "@tanstack/react-query";
-import { SiteHeader } from "@/components/site/site-header";
+import { SiteSidebar } from "@/components/site/site-sidebar";
 import { SiteFooter } from "@/components/site/site-footer";
 
 export interface RouterContext {
@@ -16,7 +16,10 @@ function RootLayout() {
   return (
     <div id="top" className="min-h-screen bg-background text-foreground">
       <HeadContent />
-      <Outlet />
+      <SiteSidebar />
+      <div className="md:pl-[210px] lg:pl-[clamp(220px,22vw,280px)]">
+        <Outlet />
+      </div>
     </div>
   );
 }
@@ -24,7 +27,6 @@ function RootLayout() {
 function NotFoundPage() {
   return (
     <div className="flex min-h-screen flex-col">
-      <SiteHeader />
       <main className="mx-auto flex w-full max-w-[1380px] flex-1 flex-col justify-center px-6 py-24 md:px-12">
         <p className="font-mono-meta text-primary">404 — Page not found</p>
         <h1 className="mt-4 font-display text-5xl font-medium tracking-tight md:text-7xl">

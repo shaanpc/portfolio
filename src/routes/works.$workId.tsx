@@ -2,7 +2,6 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { ArrowLeft, ArrowRight, ArrowUpRight, ChevronLeft, ChevronRight, X } from "lucide-react";
 import { useEffect, useState } from "react";
-import { SiteHeader } from "@/components/site/site-header";
 import { SiteFooter } from "@/components/site/site-footer";
 import { worksQueryOptions } from "@/lib/works";
 
@@ -48,7 +47,6 @@ function WorkDetailPage() {
   if (!work) {
     return (
       <div className="flex min-h-screen flex-col">
-        <SiteHeader />
         <main className="mx-auto flex w-full max-w-[1380px] flex-1 flex-col justify-center px-6 py-24 md:px-12">
           <p className="font-mono-meta text-primary">Work not found</p>
           <h1 className="mt-4 font-display text-4xl font-medium md:text-6xl">
@@ -74,8 +72,6 @@ function WorkDetailPage() {
 
   return (
     <div className="min-h-screen">
-      <SiteHeader />
-
       <main className="mx-auto max-w-[1380px] px-6 pb-20 pt-10 md:px-12 md:pb-28 md:pt-14">
         {/* Top utility bar */}
         <div className="flex flex-wrap items-center justify-between gap-4 border-b border-rule pb-6">

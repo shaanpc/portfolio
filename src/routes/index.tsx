@@ -2,7 +2,6 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { ArrowDown, ArrowUpRight } from "lucide-react";
 import { useState } from "react";
-import { SiteHeader } from "@/components/site/site-header";
 import { SiteFooter } from "@/components/site/site-footer";
 import { WorkCard, type EditorialVariant } from "@/components/site/work-card";
 import { DESIGNER_PROFILE } from "@/data/profile";
@@ -72,10 +71,11 @@ function Index() {
 
   return (
     <div className="min-h-screen">
-      <SiteHeader />
-
-      {/* Hero */}
-      <section className="mx-auto max-w-[1380px] px-6 pb-16 pt-14 md:px-12 md:pb-24 md:pt-24">
+      {/* Overview / Hero */}
+      <section
+        id="overview"
+        className="mx-auto max-w-[1380px] scroll-mt-14 px-6 pb-16 pt-14 md:scroll-mt-0 md:px-12 md:pb-24 md:pt-20"
+      >
         <div className="flex flex-wrap items-center justify-between gap-4 border-b border-rule pb-5 font-mono-meta text-muted-foreground animate-editorial-rise">
           <span>{DESIGNER_PROFILE.role}</span>
           <span>
@@ -127,7 +127,7 @@ function Index() {
       </section>
 
       {/* Selected Work */}
-      <section id="work" className="scroll-mt-16 border-t border-rule">
+      <section id="work" className="scroll-mt-14 border-t border-rule md:scroll-mt-0">
         <div className="mx-auto max-w-[1380px] px-6 py-16 md:px-12 md:py-24">
           <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
             <div>
@@ -205,7 +205,7 @@ function Index() {
       </section>
 
       {/* About */}
-      <section id="about" className="scroll-mt-16 border-t border-rule">
+      <section id="about" className="scroll-mt-14 border-t border-rule md:scroll-mt-0">
         <div className="mx-auto max-w-[1380px] px-6 py-20 md:px-12 md:py-28">
           <div className="grid gap-12 md:grid-cols-12 md:gap-12">
             <div className="md:col-span-4">
@@ -244,7 +244,10 @@ function Index() {
       </section>
 
       {/* Skills & Capabilities */}
-      <section id="capabilities" className="scroll-mt-16 border-t border-rule bg-surface/65">
+      <section
+        id="capabilities"
+        className="scroll-mt-14 border-t border-rule bg-surface/65 md:scroll-mt-0"
+      >
         <div className="mx-auto max-w-[1380px] px-6 py-20 md:px-12 md:py-24">
           <div className="grid gap-12 md:grid-cols-12">
             <div className="md:col-span-4">

@@ -16,7 +16,7 @@
 @layer base {
   html {
     scroll-behavior: smooth;
-    scroll-padding-top: 5.5rem;
+    scroll-padding-top: 3.5rem;
     background-color: var(--color-background);
     color: var(--color-foreground);
     font-family: "DM Sans", system-ui, -apple-system, sans-serif;
@@ -89,6 +89,18 @@
   animation: rule-draw 0.8s cubic-bezier(0.2, 0, 0, 1) both;
 }
 
+/* Smooth sliding circular indicator for fixed sidebar navigation */
+.nav-dot {
+  transition:
+    transform 440ms cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 220ms ease;
+  will-change: transform;
+}
+
+.sidebar-enter {
+  animation: editorial-rise 0.6s cubic-bezier(0.2, 0, 0, 1) both;
+}
+
 /* Gallery hover focus: subtly dim siblings when one piece is hovered (inspired by beyza.io) */
 @media (hover: hover) and (pointer: fine) {
   .editorial-gallery:has(.editorial-work:hover) .editorial-work:not(:hover) {
@@ -142,12 +154,14 @@
     scroll-behavior: auto;
   }
   .animate-editorial-rise,
-  .animate-rule-draw {
+  .animate-rule-draw,
+  .sidebar-enter {
     animation: none !important;
   }
   .editorial-work,
   .editorial-work-media img,
-  .editorial-link::after {
+  .editorial-link::after,
+  .nav-dot {
     transition: none !important;
   }
   .editorial-gallery:has(.editorial-work:hover) .editorial-work:not(:hover) {

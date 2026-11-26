@@ -14,7 +14,6 @@ import {
   Upload,
 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
-import { SiteHeader } from "@/components/site/site-header";
 import { SiteFooter } from "@/components/site/site-footer";
 import {
   DEFAULT_CATEGORIES,
@@ -282,8 +281,6 @@ function StudioPage() {
 
   return (
     <div className="min-h-screen">
-      <SiteHeader />
-
       <main className="mx-auto max-w-[1380px] px-6 py-12 md:px-12 md:py-16">
         <div className="flex flex-col gap-6 border-b border-rule pb-8 lg:flex-row lg:items-end lg:justify-between">
           <div>
