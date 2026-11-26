@@ -15,12 +15,11 @@
 
 :root {
   color-scheme: light;
-  --dock-bg: rgba(255, 255, 255, 0.4);
-  --dock-border: rgba(20, 20, 19, 0.08);
+  --dock-bg: rgba(255, 255, 255, 0.1);
+  --dock-border: rgba(255, 255, 255, 0.7);
   --dock-hover: rgba(20, 20, 19, 0.055);
   --dock-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.85),
-    inset 0 0 0 1px rgba(255, 255, 255, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
     0 12px 30px -6px rgba(20, 20, 19, 0.1),
     0 4px 12px -2px rgba(20, 20, 19, 0.05);
 }
@@ -37,7 +36,7 @@
   --color-rule: rgba(241, 239, 233, 0.11);
   --color-rule-strong: rgba(241, 239, 233, 0.24);
   --color-card: #141413;
-  --dock-bg: rgba(18, 18, 20, 0.4);
+  --dock-bg: rgba(18, 18, 20, 0.8);
   --dock-border: rgba(255, 255, 255, 0.12);
   --dock-hover: rgba(241, 239, 233, 0.1);
   --dock-shadow: 0 10px 28px rgba(0, 0, 0, 0.48);
