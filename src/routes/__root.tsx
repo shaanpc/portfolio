@@ -3,6 +3,7 @@ import type { QueryClient } from "@tanstack/react-query";
 import { SiteSidebar } from "@/components/site/site-sidebar";
 import { SiteFooter } from "@/components/site/site-footer";
 import { FloatingDock } from "@/components/site/floating-dock";
+import { CursorGlow } from "@/components/site/cursor-glow";
 
 export interface RouterContext {
   queryClient: QueryClient;
@@ -18,9 +19,10 @@ function RootLayout() {
     <div id="top" className="min-h-screen bg-background text-foreground">
       <HeadContent />
       <SiteSidebar />
-      <div className="md:pl-[210px] lg:pl-[clamp(220px,22vw,280px)]">
+      <div className="md:pl-[208px] lg:pl-[clamp(220px,19vw,260px)]">
         <Outlet />
       </div>
+      <CursorGlow />
       <FloatingDock />
     </div>
   );

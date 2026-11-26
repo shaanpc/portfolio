@@ -11,9 +11,8 @@ export interface NavSectionItem {
 
 export const NAV_SECTIONS: NavSectionItem[] = [
   { id: "overview", label: "Overview" },
-  { id: "work", label: "Selected Work" },
-  { id: "about", label: "About" },
-  { id: "capabilities", label: "Capabilities" },
+  { id: "things-i-do", label: "Things I Do" },
+  { id: "experience", label: "Experience" },
   { id: "contact", label: "Contact" },
 ];
 
@@ -24,9 +23,9 @@ export function SiteSidebar() {
   const navigate = useNavigate();
 
   const isHome = pathname === "/";
-  const isWorkDetail = pathname.startsWith("/works/");
+  const isWorkRoute = pathname.startsWith("/work");
 
-  const [activeId, setActiveId] = useState<string>(isWorkDetail ? "work" : "overview");
+  const [activeId, setActiveId] = useState<string>(isWorkRoute ? "things-i-do" : "overview");
   const [mobileOpen, setMobileOpen] = useState(false);
   const [dotPos, setDotPos] = useState<{ x: number; y: number } | null>(null);
   const [mobileDotPos, setMobileDotPos] = useState<{ x: number; y: number } | null>(null);
@@ -43,17 +42,21 @@ export function SiteSidebar() {
 
   // Sync default active section when switching routes
   useEffect(() => {
-    if (isWorkDetail) {
-      setActiveId("work");
+    if (isWorkRoute) {
+      setActiveId("things-i-do");
     } else if (isHome) {
       const hash = window.location.hash.replace("#", "");
-      if (hash && NAV_SECTIONS.some((s) => s.id === hash)) {
+      if (hash === "work") {
+        setActiveId("things-i-do");
+      } else if (hash === "about" || hash === "capabilities") {
+        setActiveId("experience");
+      } else if (hash && NAV_SECTIONS.some((s) => s.id === hash)) {
         setActiveId(hash);
       } else if (window.scrollY < 48) {
         setActiveId("overview");
       }
     }
-  }, [isHome, isWorkDetail, pathname]);
+  }, [isHome, isWorkRoute, pathname]);
 
   // Measure and position the circular indicator beside the active label
   const updateDotPosition = useCallback(() => {
@@ -237,24 +240,24 @@ export function SiteSidebar() {
       {/* Desktop & Tablet Fixed Left Sidebar */}
       <aside
         aria-label="Primary navigation"
-        className="fixed inset-y-0 left-0 z-40 hidden bg-background text-foreground md:flex md:w-[210px] md:flex-col md:justify-between md:px-7 md:py-10 lg:w-[clamp(220px,22vw,280px)] lg:px-10 lg:py-12"
+        className="fixed inset-y-0 left-0 z-40 hidden border-r border-rule bg-background text-foreground md:flex md:w-[208px] md:flex-col md:justify-between md:px-8 md:py-11 lg:w-[clamp(220px,19vw,260px)] lg:px-10 lg:py-12"
       >
         {/* Top identity */}
         <div className="sidebar-enter">
           <Link
             to="/"
             onClick={(e) => handleNavClick(e as unknown as React.MouseEvent<HTMLAnchorElement>, "overview")}
-            className="inline-block font-display text-base font-medium tracking-tight text-foreground transition-colors duration-200 hover:text-primary"
+            className="inline-block font-editorial text-[22px] italic font-normal leading-tight tracking-[-0.01em] text-foreground transition-colors duration-200 hover:text-primary"
           >
             {DESIGNER_PROFILE.name}
           </Link>
-          <p className="mt-1 text-[11px] tracking-wide text-muted-foreground">
+          <p className="mt-1 text-[11px] tracking-[0.02em] text-muted-foreground">
             {DESIGNER_PROFILE.location}
           </p>
         </div>
 
         {/* Vertically centered navigation links with sliding dot indicator */}
-        <nav ref={navRef} aria-label="Sections" className="relative my-auto flex flex-col gap-1.5 py-6">
+        <nav ref={navRef} aria-label="Sections" className="relative my-auto flex flex-col gap-2 py-8">
           <span
             aria-hidden="true"
             className={cn(
@@ -280,7 +283,7 @@ export function SiteSidebar() {
                 aria-current={isActive ? "location" : undefined}
                 onClick={(e) => handleNavClick(e, item.id)}
                 className={cn(
-                  "group relative flex items-center py-2 text-[14px] leading-snug tracking-[-0.01em] transition-colors duration-200",
+                  "group relative flex items-center py-2 text-[13.5px] leading-snug tracking-[-0.005em] transition-colors duration-200",
                   isActive
                     ? "font-medium text-foreground"
                     : "font-normal text-muted-foreground hover:text-foreground",
@@ -327,7 +330,7 @@ export function SiteSidebar() {
           <Link
             to="/"
             onClick={(e) => handleNavClick(e as unknown as React.MouseEvent<HTMLAnchorElement>, "overview")}
-            className="font-display text-base font-medium tracking-tight text-foreground"
+            className="font-editorial text-xl italic font-normal tracking-[-0.01em] text-foreground"
           >
             {DESIGNER_PROFILE.name}
           </Link>

@@ -14,7 +14,7 @@ export function SiteFooter() {
         <div className="grid gap-12 md:grid-cols-12 md:items-end">
           <div className="md:col-span-7">
             <p className="font-mono-meta text-primary">Contact</p>
-            <h2 className="mt-4 font-display text-4xl leading-[1.08] font-medium text-foreground sm:text-5xl md:text-6xl">
+            <h2 className="mt-4 font-display text-4xl leading-[1.06] font-normal text-foreground sm:text-5xl md:text-6xl">
               What shall we{" "}
               <span className="font-editorial italic font-normal text-primary">create</span>{" "}
               next?
@@ -63,11 +63,14 @@ export function SiteFooter() {
           </div>
 
           <div className="flex flex-wrap items-center gap-6">
-            <a href="/#work" className="transition-colors hover:text-foreground">
-              Selected Work
+            <a href="/#things-i-do" className="transition-colors hover:text-foreground">
+              Things I Do
             </a>
-            <a href="/#about" className="transition-colors hover:text-foreground">
-              About
+            <Link to="/work" className="transition-colors hover:text-foreground">
+              All Projects
+            </Link>
+            <a href="/#experience" className="transition-colors hover:text-foreground">
+              Experience
             </a>
             <Link to="/studio" className="transition-colors hover:text-foreground">
               Archive Studio

@@ -2,14 +2,14 @@
 
 @theme {
   --color-background: #f8f6f1;
-  --color-foreground: #141413;
-  --color-primary: #c84323;
+  --color-foreground: #1d1c1a;
+  --color-primary: #c94f32;
   --color-primary-foreground: #fbfaf7;
-  --color-surface: #f1eee7;
-  --color-muted: #eae6dd;
-  --color-muted-foreground: #6b6861;
-  --color-rule: rgba(20, 20, 19, 0.11);
-  --color-rule-strong: rgba(20, 20, 19, 0.24);
+  --color-surface: #f2efe9;
+  --color-muted: #eae5dc;
+  --color-muted-foreground: #858078;
+  --color-rule: rgba(29, 28, 26, 0.1);
+  --color-rule-strong: rgba(29, 28, 26, 0.22);
   --color-card: #ffffff;
 }
 
@@ -68,20 +68,21 @@
 }
 
 .font-display {
-  font-family: "Plus Jakarta Sans", "DM Sans", system-ui, sans-serif;
-  letter-spacing: -0.035em;
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-weight: 400;
+  letter-spacing: -0.02em;
 }
 
 .font-editorial {
-  font-family: "Instrument Serif", Georgia, serif;
+  font-family: "Cormorant Garamond", Georgia, serif;
   font-weight: 400;
 }
 
 .font-mono-meta {
-  font-family: "Space Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
-  font-size: 0.7rem;
-  line-height: 1.3;
-  letter-spacing: 0.12em;
+  font-family: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.6875rem;
+  line-height: 1.4;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
 }
 
@@ -407,6 +408,10 @@
   transform-origin: left center;
 }
 
+.editorial-link-accent::after {
+  background-color: var(--color-primary);
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -435,4 +440,131 @@
   .editorial-work:hover .editorial-work-media img {
     transform: none;
   }
+}
+
+/* Global mouse-following ambient radial glow */
+.cursor-glow-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 45;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.cursor-glow-orb {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 680px;
+  height: 680px;
+  border-radius: 9999px;
+  pointer-events: none;
+  will-change: transform, opacity;
+  opacity: 0;
+  transition: opacity 320ms ease;
+  background: radial-gradient(
+    circle,
+    rgba(201, 79, 50, 0.14) 0%,
+    rgba(218, 108, 68, 0.08) 28%,
+    rgba(235, 165, 130, 0.035) 52%,
+    transparent 74%
+  );
+}
+
+.cursor-glow-orb[data-active="true"] {
+  opacity: 1;
+}
+
+:root[data-theme="dark"] .cursor-glow-orb {
+  background: radial-gradient(
+    circle,
+    rgba(224, 90, 57, 0.18) 0%,
+    rgba(224, 90, 57, 0.09) 30%,
+    rgba(241, 239, 233, 0.025) 56%,
+    transparent 75%
+  );
+}
+
+@media (hover: none) and (pointer: coarse), (prefers-reduced-motion: reduce) {
+  .cursor-glow-layer {
+    display: none !important;
+  }
+}
+
+/* Smooth continuous staggered marquee tracks for Things I Do showcase */
+@keyframes gallery-marquee-left {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+@keyframes gallery-marquee-right {
+  0% {
+    transform: translate3d(-50%, 0, 0);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.gallery-marquee-track {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+  animation: gallery-marquee-left 64s linear infinite;
+}
+
+.gallery-marquee-track-reverse {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+  animation: gallery-marquee-right 74s linear infinite;
+}
+
+.gallery-marquee-viewport:hover .gallery-marquee-track,
+.gallery-marquee-viewport:hover .gallery-marquee-track-reverse,
+.gallery-marquee-viewport:focus-within .gallery-marquee-track,
+.gallery-marquee-viewport:focus-within .gallery-marquee-track-reverse,
+.gallery-marquee-viewport[data-paused="true"] .gallery-marquee-track,
+.gallery-marquee-viewport[data-paused="true"] .gallery-marquee-track-reverse {
+  animation-play-state: paused;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gallery-marquee-track,
+  .gallery-marquee-track-reverse {
+    animation: none !important;
+    width: auto;
+  }
+}
+
+/* Subtle warm peach/terracotta aura behind hero portrait */
+.hero-portrait-glow {
+  background: radial-gradient(
+    circle at 52% 46%,
+    rgba(201, 79, 50, 0.14) 0%,
+    rgba(235, 168, 134, 0.1) 36%,
+    rgba(248, 246, 241, 0) 70%
+  );
+}
+
+:root[data-theme="dark"] .hero-portrait-glow {
+  background: radial-gradient(
+    circle at 52% 46%,
+    rgba(224, 90, 57, 0.2) 0%,
+    rgba(201, 79, 50, 0.08) 40%,
+    rgba(12, 12, 11, 0) 72%
+  );
 }

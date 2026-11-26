@@ -30,6 +30,8 @@ export const DEFAULT_CATEGORIES = [
   "Visual Storytelling",
 ] as const;
 
+export const ARCHIVE_CATEGORIES = ["All", ...DEFAULT_CATEGORIES] as const;
+
 const STORAGE_KEY = "shan_pc_portfolio_works_v2";
 
 function normalizeWork(raw: Partial<Work>, fallbackIndex = 0): Work {
