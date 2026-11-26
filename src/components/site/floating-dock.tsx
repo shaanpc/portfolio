@@ -84,18 +84,11 @@ export function FloatingDock() {
 
   return (
     <div
-      className="dock-enter fixed bottom-[max(1.25rem,env(safe-area-inset-bottom))] left-1/2 z-50 max-w-[calc(100vw-1.5rem)]"
+      className="pointer-events-none fixed inset-x-0 bottom-[max(1.25rem,env(safe-area-inset-bottom))] z-50 flex justify-center px-3"
       role="region"
       aria-label="Quick links and appearance"
     >
-      <div
-        className="floating-dock-pill flex items-center gap-0.5 rounded-full border p-1.5 sm:gap-1.5 sm:p-2"
-        style={{
-          backgroundColor: "var(--dock-bg)",
-          borderColor: "var(--dock-border)",
-          boxShadow: "var(--dock-shadow)",
-        }}
-      >
+      <div className="dock-enter floating-dock-pill pointer-events-auto flex max-w-full items-center gap-0.5 rounded-full border p-1.5 sm:gap-1.5 sm:p-2">
         {/* Dark-mode travelling white glow layers (hidden in light mode) */}
         <span aria-hidden="true" className="dock-halo-glow" />
         <span aria-hidden="true" className="dock-dark-surface" />
