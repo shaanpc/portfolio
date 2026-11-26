@@ -13,6 +13,36 @@
   --color-card: #ffffff;
 }
 
+:root {
+  color-scheme: light;
+  --dock-bg: rgba(248, 246, 241, 0.78);
+  --dock-border: rgba(20, 20, 19, 0.12);
+  --dock-hover: rgba(20, 20, 19, 0.06);
+  --dock-shadow: 0 8px 30px rgba(20, 20, 19, 0.08);
+  --dock-resume-rim: linear-gradient(135deg, rgba(20, 20, 19, 0.22), rgba(20, 20, 19, 0.06), rgba(20, 20, 19, 0.22));
+  --dock-resume-bg: #fbfaf7;
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --color-background: #0c0c0b;
+  --color-foreground: #f1efe9;
+  --color-primary: #e05a39;
+  --color-primary-foreground: #0c0c0b;
+  --color-surface: #161615;
+  --color-muted: #1e1e1c;
+  --color-muted-foreground: #9b978f;
+  --color-rule: rgba(241, 239, 233, 0.11);
+  --color-rule-strong: rgba(241, 239, 233, 0.24);
+  --color-card: #141413;
+  --dock-bg: rgba(18, 18, 17, 0.78);
+  --dock-border: rgba(241, 239, 233, 0.12);
+  --dock-hover: rgba(241, 239, 233, 0.08);
+  --dock-shadow: 0 10px 32px rgba(0, 0, 0, 0.48);
+  --dock-resume-rim: linear-gradient(135deg, rgba(255, 255, 255, 0.34), rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.3));
+  --dock-resume-bg: #131312;
+}
+
 @layer base {
   html {
     scroll-behavior: smooth;
@@ -23,6 +53,7 @@
     font-feature-settings: "ss01" on, "cv02" on;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    transition: background-color 240ms ease, color 240ms ease;
   }
 
   body {
@@ -31,6 +62,7 @@
     background-color: var(--color-background);
     color: var(--color-foreground);
     overflow-x: hidden;
+    transition: background-color 240ms ease, color 240ms ease;
   }
 
   ::selection {
@@ -101,6 +133,21 @@
   animation: editorial-rise 0.6s cubic-bezier(0.2, 0, 0, 1) both;
 }
 
+@keyframes dock-rise {
+  from {
+    opacity: 0;
+    transform: translate3d(-50%, 12px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+.dock-enter {
+  animation: dock-rise 0.65s cubic-bezier(0.22, 1, 0.36, 1) 180ms both;
+}
+
 /* Gallery hover focus: subtly dim siblings when one piece is hovered (inspired by beyza.io) */
 @media (hover: hover) and (pointer: fine) {
   .editorial-gallery:has(.editorial-work:hover) .editorial-work:not(:hover) {
@@ -155,7 +202,8 @@
   }
   .animate-editorial-rise,
   .animate-rule-draw,
-  .sidebar-enter {
+  .sidebar-enter,
+  .dock-enter {
     animation: none !important;
   }
   .editorial-work,

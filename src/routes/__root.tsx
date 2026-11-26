@@ -2,6 +2,7 @@ import { HeadContent, Link, Outlet, createRootRouteWithContext } from "@tanstack
 import type { QueryClient } from "@tanstack/react-query";
 import { SiteSidebar } from "@/components/site/site-sidebar";
 import { SiteFooter } from "@/components/site/site-footer";
+import { FloatingDock } from "@/components/site/floating-dock";
 
 export interface RouterContext {
   queryClient: QueryClient;
@@ -20,6 +21,7 @@ function RootLayout() {
       <div className="md:pl-[210px] lg:pl-[clamp(220px,22vw,280px)]">
         <Outlet />
       </div>
+      <FloatingDock />
     </div>
   );
 }

@@ -237,18 +237,18 @@ export function SiteSidebar() {
       {/* Desktop & Tablet Fixed Left Sidebar */}
       <aside
         aria-label="Primary navigation"
-        className="fixed inset-y-0 left-0 z-40 hidden bg-[#0a0a0a] text-[#f4f4f6] md:flex md:w-[210px] md:flex-col md:justify-between md:px-7 md:py-10 lg:w-[clamp(220px,22vw,280px)] lg:px-10 lg:py-12"
+        className="fixed inset-y-0 left-0 z-40 hidden bg-background text-foreground md:flex md:w-[210px] md:flex-col md:justify-between md:px-7 md:py-10 lg:w-[clamp(220px,22vw,280px)] lg:px-10 lg:py-12"
       >
         {/* Top identity */}
         <div className="sidebar-enter">
           <Link
             to="/"
             onClick={(e) => handleNavClick(e as unknown as React.MouseEvent<HTMLAnchorElement>, "overview")}
-            className="inline-block font-display text-base font-medium tracking-tight text-[#f4f4f6] transition-opacity duration-200 hover:opacity-80"
+            className="inline-block font-display text-base font-medium tracking-tight text-foreground transition-colors duration-200 hover:text-primary"
           >
             {DESIGNER_PROFILE.name}
           </Link>
-          <p className="mt-1 text-[11px] tracking-wide text-[#6b6b73]">
+          <p className="mt-1 text-[11px] tracking-wide text-muted-foreground">
             {DESIGNER_PROFILE.location}
           </p>
         </div>
@@ -258,7 +258,7 @@ export function SiteSidebar() {
           <span
             aria-hidden="true"
             className={cn(
-              "nav-dot pointer-events-none absolute left-0 top-0 h-[5px] w-[5px] rounded-full bg-[#f4f4f6]",
+              "nav-dot pointer-events-none absolute left-0 top-0 h-[5px] w-[5px] rounded-full bg-foreground",
               dotPos ? "opacity-100" : "opacity-0",
             )}
             style={
@@ -282,8 +282,8 @@ export function SiteSidebar() {
                 className={cn(
                   "group relative flex items-center py-2 text-[14px] leading-snug tracking-[-0.01em] transition-colors duration-200",
                   isActive
-                    ? "font-medium text-[#f4f4f6]"
-                    : "font-normal text-[#71717a] hover:text-[#d4d4d8]",
+                    ? "font-medium text-foreground"
+                    : "font-normal text-muted-foreground hover:text-foreground",
                 )}
               >
                 <span
@@ -299,12 +299,12 @@ export function SiteSidebar() {
         </nav>
 
         {/* Minimal external footer links inside sidebar */}
-        <div className="sidebar-enter flex flex-col gap-2.5 text-xs text-[#71717a]">
+        <div className="sidebar-enter flex flex-col gap-2.5 text-xs text-muted-foreground">
           <a
             href={DESIGNER_PROFILE.links.behance}
             target="_blank"
             rel="noreferrer"
-            className="inline-flex w-fit items-center gap-1 transition-colors duration-200 hover:text-[#f4f4f6]"
+            className="inline-flex w-fit items-center gap-1 transition-colors duration-200 hover:text-foreground"
           >
             <span>Behance</span>
             <ArrowUpRight className="h-3 w-3" aria-hidden="true" />
@@ -313,7 +313,7 @@ export function SiteSidebar() {
             href={DESIGNER_PROFILE.links.contra}
             target="_blank"
             rel="noreferrer"
-            className="inline-flex w-fit items-center gap-1 transition-colors duration-200 hover:text-[#f4f4f6]"
+            className="inline-flex w-fit items-center gap-1 transition-colors duration-200 hover:text-foreground"
           >
             <span>Contra</span>
             <ArrowUpRight className="h-3 w-3" aria-hidden="true" />
@@ -322,20 +322,20 @@ export function SiteSidebar() {
       </aside>
 
       {/* Mobile Compact Top Navigation */}
-      <header className="sticky top-0 z-40 bg-[#0a0a0a] text-[#f4f4f6] md:hidden">
+      <header className="sticky top-0 z-40 border-b border-rule bg-background/95 text-foreground backdrop-blur-sm md:hidden">
         <div className="flex h-14 items-center justify-between px-5">
           <Link
             to="/"
             onClick={(e) => handleNavClick(e as unknown as React.MouseEvent<HTMLAnchorElement>, "overview")}
-            className="font-display text-base font-medium tracking-tight text-[#f4f4f6]"
+            className="font-display text-base font-medium tracking-tight text-foreground"
           >
             {DESIGNER_PROFILE.name}
           </Link>
 
           <div className="flex items-center gap-4">
-            <span className="inline-flex items-center gap-2 text-xs font-medium text-[#f4f4f6]">
+            <span className="inline-flex items-center gap-2 text-xs font-medium text-foreground">
               <span>{activeLabel}</span>
-              <span className="h-[5px] w-[5px] rounded-full bg-[#f4f4f6]" aria-hidden="true" />
+              <span className="h-[5px] w-[5px] rounded-full bg-foreground" aria-hidden="true" />
             </span>
 
             <button
@@ -343,7 +343,7 @@ export function SiteSidebar() {
               aria-expanded={mobileOpen}
               aria-label={mobileOpen ? "Close navigation menu" : "Open navigation menu"}
               onClick={() => setMobileOpen((prev) => !prev)}
-              className="inline-flex h-10 w-10 items-center justify-center text-[#a1a1aa] transition-colors hover:text-[#f4f4f6]"
+              className="inline-flex h-10 w-10 items-center justify-center text-muted-foreground transition-colors hover:text-foreground"
             >
               {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
             </button>
@@ -351,12 +351,12 @@ export function SiteSidebar() {
         </div>
 
         {mobileOpen && (
-          <div className="border-t border-white/10 bg-[#0a0a0a] px-5 pb-6 pt-3">
+          <div className="border-t border-rule bg-background px-5 pb-6 pt-3">
             <nav ref={mobileNavRef} aria-label="Mobile sections" className="relative flex flex-col gap-1">
               <span
                 aria-hidden="true"
                 className={cn(
-                  "nav-dot pointer-events-none absolute left-0 top-0 h-[5px] w-[5px] rounded-full bg-[#f4f4f6]",
+                  "nav-dot pointer-events-none absolute left-0 top-0 h-[5px] w-[5px] rounded-full bg-foreground",
                   mobileDotPos ? "opacity-100" : "opacity-0",
                 )}
                 style={
@@ -380,8 +380,8 @@ export function SiteSidebar() {
                     className={cn(
                       "py-2.5 text-[15px] transition-colors duration-200",
                       isActive
-                        ? "font-medium text-[#f4f4f6]"
-                        : "text-[#71717a] hover:text-[#d4d4d8]",
+                        ? "font-medium text-foreground"
+                        : "text-muted-foreground hover:text-foreground",
                     )}
                   >
                     <span
@@ -396,13 +396,13 @@ export function SiteSidebar() {
               })}
             </nav>
 
-            <div className="mt-4 flex items-center gap-6 border-t border-white/10 pt-4 text-xs text-[#71717a]">
+            <div className="mt-4 flex items-center gap-6 border-t border-rule pt-4 text-xs text-muted-foreground">
               <a
                 href={DESIGNER_PROFILE.links.behance}
                 target="_blank"
                 rel="noreferrer"
                 onClick={() => setMobileOpen(false)}
-                className="inline-flex items-center gap-1 hover:text-[#f4f4f6]"
+                className="inline-flex items-center gap-1 hover:text-foreground"
               >
                 <span>Behance</span>
                 <ArrowUpRight className="h-3.5 w-3.5" aria-hidden="true" />
@@ -412,7 +412,7 @@ export function SiteSidebar() {
                 target="_blank"
                 rel="noreferrer"
                 onClick={() => setMobileOpen(false)}
-                className="inline-flex items-center gap-1 hover:text-[#f4f4f6]"
+                className="inline-flex items-center gap-1 hover:text-foreground"
               >
                 <span>Contra</span>
                 <ArrowUpRight className="h-3.5 w-3.5" aria-hidden="true" />

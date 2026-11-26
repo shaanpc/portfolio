@@ -17,6 +17,10 @@ export const DESIGNER_PROFILE = {
   links: {
     behance: "https://www.behance.net/shaanpc",
     contra: "https://contra.com/shan_pc_xwkl28gv",
+    linkedin: "https://www.linkedin.com/in/shanpc",
+    x: "https://x.com/shanpc_",
+    email: "connectshanpc@gmail.com",
+    resume: "/resume.pdf",
   },
   capabilities: [
     {
