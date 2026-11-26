@@ -1,4 +1,4 @@
-import { ArrowUp, Mail, Moon, Sun } from "lucide-react";
+import { ArrowUp, Instagram, Mail, Moon, Sun } from "lucide-react";
 import { useEffect, useState } from "react";
 import { DESIGNER_PROFILE } from "@/data/profile";
 import { cn } from "@/lib/utils";
@@ -51,7 +51,7 @@ function LinkedInIcon({ className }: { className?: string }) {
 
 export function FloatingDock() {
   const [theme, setTheme] = useState<Theme>(() => readInitialTheme());
-  const [scrollProgress, setScrollProgress] = useState(0);
+  const [atTop, setAtTop] = useState(true);
 
   useEffect(() => {
     document.documentElement.dataset.theme = theme;
@@ -63,95 +63,66 @@ export function FloatingDock() {
   }, [theme]);
 
   useEffect(() => {
-    let rafId = 0;
-
-    const updateProgress = () => {
-      rafId = 0;
-      const scrollTop = window.scrollY;
-      const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
-      if (maxScroll <= 0) {
-        setScrollProgress(0);
-        return;
-      }
-      const pct = Math.min(100, Math.max(0, (scrollTop / maxScroll) * 100));
-      setScrollProgress(pct);
-    };
-
     const onScroll = () => {
-      if (rafId) return;
-      rafId = window.requestAnimationFrame(updateProgress);
+      setAtTop(window.scrollY < 48);
     };
-
-    updateProgress();
+    onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll);
-
-    return () => {
-      window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", onScroll);
-      if (rafId) window.cancelAnimationFrame(rafId);
-    };
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
-
-  const canScrollTop = scrollProgress > 8;
-  const atBottom = scrollProgress > 90;
 
   function toggleTheme() {
     setTheme((prev) => (prev === "light" ? "dark" : "light"));
   }
 
   function handleBackToTop() {
-    if (!canScrollTop) return;
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
   const iconButtonClass =
-    "inline-flex h-8 w-8 sm:h-9 sm:w-9 items-center justify-center rounded-full text-muted-foreground transition-all duration-200 hover:-translate-y-px hover:bg-[var(--dock-hover)] hover:text-foreground active:scale-95 focus-visible:outline-2 focus-visible:outline-foreground";
+    "floating-dock-icon relative z-10 inline-flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center rounded-full text-foreground transition-all duration-200 hover:-translate-y-0.5 hover:bg-[var(--dock-hover)] active:scale-95 focus-visible:outline-2 focus-visible:outline-foreground";
 
   return (
     <div
-      className="dock-enter fixed bottom-[max(1rem,env(safe-area-inset-bottom))] left-1/2 z-40 max-w-[calc(100vw-1.5rem)]"
+      className="dock-enter fixed bottom-[max(1.25rem,env(safe-area-inset-bottom))] left-1/2 z-50 max-w-[calc(100vw-1.5rem)]"
       role="region"
       aria-label="Quick links and appearance"
     >
       <div
-        className="flex items-center gap-0.5 rounded-full border p-1 sm:gap-1 sm:p-1.5"
+        className="floating-dock-pill flex items-center gap-0.5 rounded-full border p-1.5 sm:gap-1.5 sm:p-2"
         style={{
           backgroundColor: "var(--dock-bg)",
           borderColor: "var(--dock-border)",
           boxShadow: "var(--dock-shadow)",
-          backdropFilter: "blur(18px) saturate(140%)",
-          WebkitBackdropFilter: "blur(18px) saturate(140%)",
         }}
       >
-        {/* 1. Resume pill button */}
+        {/* Dark-mode travelling white glow layers (hidden in light mode) */}
+        <span aria-hidden="true" className="dock-halo-glow" />
+        <span aria-hidden="true" className="dock-dark-surface" />
+        <span aria-hidden="true" className="dock-border-glow" />
+
+        {/* Resume pill button */}
         <a
           href={DESIGNER_PROFILE.links.resume}
           target="_blank"
           rel="noopener noreferrer"
           aria-label="Open Resume PDF in a new tab"
-          className="group mr-0.5 inline-flex shrink-0 rounded-full p-[1px] transition-transform duration-200 hover:-translate-y-px active:scale-95 focus-visible:outline-2 focus-visible:outline-foreground sm:mr-1"
-          style={{ background: "var(--dock-resume-rim)" }}
+          className="floating-dock-resume relative z-10 mr-1 inline-flex h-9 shrink-0 items-center justify-center rounded-full bg-foreground px-4 text-xs font-medium tracking-[-0.01em] text-background transition-all duration-200 hover:-translate-y-0.5 active:scale-95 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-foreground sm:mr-1.5 sm:h-10 sm:px-6 sm:text-[13px]"
         >
-          <span
-            className="inline-flex h-8 items-center justify-center rounded-full px-3.5 text-xs font-medium tracking-[-0.01em] text-foreground transition-colors duration-200 group-hover:bg-surface sm:h-9 sm:px-4 sm:text-[13px]"
-            style={{ backgroundColor: "var(--dock-resume-bg)" }}
-          >
-            Resume
-          </span>
+          Resume
         </a>
 
-        {/* 2. Email icon */}
+        {/* 1. Email icon */}
         <a
           href={`mailto:${DESIGNER_PROFILE.links.email}`}
           aria-label={`Email ${DESIGNER_PROFILE.name} at ${DESIGNER_PROFILE.links.email}`}
           title={DESIGNER_PROFILE.links.email}
           className={iconButtonClass}
         >
-          <Mail className="h-4 w-4 stroke-[1.6]" aria-hidden="true" />
+          <Mail className="h-[18px] w-[18px] stroke-[1.75]" aria-hidden="true" />
         </a>
 
-        {/* 3. X (Twitter) icon */}
+        {/* 2. X (Twitter) icon */}
         <a
           href={DESIGNER_PROFILE.links.x}
           target="_blank"
@@ -160,10 +131,10 @@ export function FloatingDock() {
           title="X"
           className={iconButtonClass}
         >
-          <XIcon className="h-3.5 w-3.5" />
+          <XIcon className="h-[17px] w-[17px]" />
         </a>
 
-        {/* 4. LinkedIn icon */}
+        {/* 3. LinkedIn icon */}
         <a
           href={DESIGNER_PROFILE.links.linkedin}
           target="_blank"
@@ -172,16 +143,28 @@ export function FloatingDock() {
           title="LinkedIn"
           className={iconButtonClass}
         >
-          <LinkedInIcon className="h-4 w-4" />
+          <LinkedInIcon className="h-[18px] w-[18px]" />
+        </a>
+
+        {/* 4. Instagram icon */}
+        <a
+          href="https://www.instagram.com/shaan.pc"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Instagram"
+          title="Instagram"
+          className={iconButtonClass}
+        >
+          <Instagram className="h-[18px] w-[18px] stroke-[1.75]" aria-hidden="true" />
         </a>
 
         {/* 5. Thin vertical separator */}
         <span
           aria-hidden="true"
-          className="mx-1 h-4 w-px shrink-0 bg-rule-strong sm:mx-1.5"
+          className="relative z-10 mx-1 h-4 w-px shrink-0 bg-foreground/20 sm:mx-1.5"
         />
 
-        {/* 6. Theme toggle */}
+        {/* 5. Theme toggle (Sun/Moon) */}
         <button
           type="button"
           onClick={toggleTheme}
@@ -189,68 +172,28 @@ export function FloatingDock() {
           title={theme === "light" ? "Dark mode" : "Light mode"}
           className={cn(iconButtonClass, "cursor-pointer")}
         >
-          {theme === "light" ? (
-            <Moon className="h-4 w-4 stroke-[1.6] transition-transform duration-300" aria-hidden="true" />
-          ) : (
-            <Sun className="h-4 w-4 stroke-[1.6] transition-transform duration-300" aria-hidden="true" />
-          )}
+          <span className="inline-flex transition-transform duration-300 ease-out">
+            {theme === "light" ? (
+              <Moon className="h-[18px] w-[18px] stroke-[1.75]" aria-hidden="true" />
+            ) : (
+              <Sun className="h-[18px] w-[18px] stroke-[1.75]" aria-hidden="true" />
+            )}
+          </span>
         </button>
 
-        {/* 7. Circular scroll progress & back-to-top control */}
+        {/* 6. Back-to-top arrow */}
         <button
           type="button"
           onClick={handleBackToTop}
-          disabled={!canScrollTop}
           aria-label="Scroll back to top"
-          title={canScrollTop ? "Back to top" : "Scroll progress"}
+          title="Back to top"
           className={cn(
-            "group relative inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full transition-all duration-200 sm:h-9 sm:w-9",
-            canScrollTop
-              ? "cursor-pointer text-foreground hover:bg-[var(--dock-hover)] active:scale-95"
-              : "cursor-default text-muted-foreground",
+            iconButtonClass,
+            "cursor-pointer",
+            atTop && "opacity-65 hover:opacity-100",
           )}
         >
-          <svg
-            viewBox="0 0 24 24"
-            aria-hidden="true"
-            className={cn(
-              "h-[20px] w-[20px] -rotate-90 transition-opacity duration-200",
-              atBottom ? "opacity-0 group-hover:opacity-0" : "group-hover:opacity-25",
-            )}
-          >
-            <circle
-              cx="12"
-              cy="12"
-              r="9"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.8"
-              className="opacity-20"
-            />
-            <circle
-              cx="12"
-              cy="12"
-              r="9"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.8"
-              strokeLinecap="round"
-              pathLength={100}
-              strokeDasharray="100"
-              strokeDashoffset={100 - scrollProgress}
-            />
-          </svg>
-          <ArrowUp
-            aria-hidden="true"
-            className={cn(
-              "absolute h-3.5 w-3.5 transition-all duration-200",
-              atBottom
-                ? "translate-y-0 opacity-100"
-                : canScrollTop
-                  ? "translate-y-0.5 opacity-0 group-hover:translate-y-0 group-hover:opacity-100"
-                  : "opacity-0",
-            )}
-          />
+          <ArrowUp className="h-[18px] w-[18px] stroke-[1.85]" aria-hidden="true" />
         </button>
       </div>
     </div>
