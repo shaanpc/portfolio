@@ -15,10 +15,10 @@
 
 :root {
   color-scheme: light;
-  --dock-bg: #faf8f4;
-  --dock-border: rgba(20, 20, 19, 0.42);
-  --dock-hover: rgba(20, 20, 19, 0.07);
-  --dock-shadow: 0 8px 24px rgba(20, 20, 19, 0.11), 0 2px 6px rgba(20, 20, 19, 0.06);
+  --dock-bg: #faf9f6;
+  --dock-border: rgba(20, 20, 19, 0.07);
+  --dock-hover: rgba(20, 20, 19, 0.05);
+  --dock-shadow: 0 12px 32px -4px rgba(20, 20, 19, 0.08), 0 4px 12px -2px rgba(20, 20, 19, 0.04);
 }
 
 :root[data-theme="dark"] {
@@ -158,9 +158,32 @@
   pointer-events: none;
 }
 
-/* Light-mode Resume hover keeps existing subtle opacity polish */
+/* Light-mode dock: black Resume pill, medium-grey icons, subtle light-grey separator */
+:root:not([data-theme="dark"]) .floating-dock-resume {
+  background-color: #111110;
+  color: #ffffff;
+  box-shadow: none;
+}
+
 :root:not([data-theme="dark"]) .floating-dock-resume:hover {
-  opacity: 0.86;
+  background-color: #242422;
+}
+
+:root:not([data-theme="dark"]) .floating-dock-icon {
+  color: #6b6a66;
+}
+
+:root:not([data-theme="dark"]) .floating-dock-icon:hover {
+  color: #1a1a18;
+  background-color: var(--dock-hover);
+}
+
+.floating-dock-separator {
+  background-color: rgba(20, 20, 19, 0.13);
+}
+
+:root[data-theme="dark"] .floating-dock-separator {
+  background-color: rgba(241, 239, 233, 0.2);
 }
 
 @keyframes dock-beam-rotate {

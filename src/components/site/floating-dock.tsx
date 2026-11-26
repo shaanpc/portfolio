@@ -80,7 +80,7 @@ export function FloatingDock() {
   }
 
   const iconButtonClass =
-    "floating-dock-icon relative z-10 inline-flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center rounded-full text-foreground transition-all duration-200 hover:-translate-y-0.5 hover:bg-[var(--dock-hover)] active:scale-95 focus-visible:outline-2 focus-visible:outline-foreground";
+    "floating-dock-icon relative z-10 inline-flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center rounded-full transition-colors duration-200 hover:bg-[var(--dock-hover)] active:scale-95 focus-visible:outline-2 focus-visible:outline-foreground";
 
   return (
     <div
@@ -107,7 +107,7 @@ export function FloatingDock() {
           target="_blank"
           rel="noopener noreferrer"
           aria-label="Open Resume PDF in a new tab"
-          className="floating-dock-resume relative z-10 mr-1 inline-flex h-9 shrink-0 items-center justify-center rounded-full bg-foreground px-4 text-xs font-medium tracking-[-0.01em] text-background transition-all duration-200 hover:-translate-y-0.5 active:scale-95 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-foreground sm:mr-1.5 sm:h-10 sm:px-6 sm:text-[13px]"
+          className="floating-dock-resume relative z-10 mr-1 inline-flex h-9 shrink-0 items-center justify-center rounded-full bg-foreground px-4 text-xs font-medium tracking-[-0.01em] text-background transition-colors duration-200 active:scale-95 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-foreground sm:mr-1.5 sm:h-10 sm:px-6 sm:text-[13px]"
         >
           Resume
         </a>
@@ -161,10 +161,10 @@ export function FloatingDock() {
         {/* 5. Thin vertical separator */}
         <span
           aria-hidden="true"
-          className="relative z-10 mx-1 h-4 w-px shrink-0 bg-foreground/20 sm:mx-1.5"
+          className="floating-dock-separator relative z-10 mx-1 h-4 w-px shrink-0 sm:mx-1.5"
         />
 
-        {/* 5. Theme toggle (Sun/Moon) */}
+        {/* 6. Theme toggle (Sun/Moon) */}
         <button
           type="button"
           onClick={toggleTheme}
@@ -181,7 +181,7 @@ export function FloatingDock() {
           </span>
         </button>
 
-        {/* 6. Back-to-top arrow */}
+        {/* 7. Back-to-top arrow */}
         <button
           type="button"
           onClick={handleBackToTop}
@@ -190,7 +190,7 @@ export function FloatingDock() {
           className={cn(
             iconButtonClass,
             "cursor-pointer",
-            atTop && "opacity-65 hover:opacity-100",
+            atTop && "opacity-90 hover:opacity-100",
           )}
         >
           <ArrowUp className="h-[18px] w-[18px] stroke-[1.85]" aria-hidden="true" />
