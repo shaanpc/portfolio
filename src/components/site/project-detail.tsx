@@ -3,6 +3,7 @@ import { ArrowLeft, ArrowUpRight, ChevronLeft, ChevronRight, X } from "lucide-re
 import { useEffect, useState } from "react";
 import type { Work } from "@/lib/works";
 import { ProjectNavigation } from "./project-navigation";
+import { ParallaxImage, Reveal } from "./scroll-reveal";
 
 interface ProjectDetailProps {
   works: Work[];
@@ -124,78 +125,88 @@ export function ProjectDetail({ works, projectSlug }: ProjectDetailProps) {
 
         {/* Project Introduction */}
         <header className="mt-12 grid gap-10 md:mt-16 md:grid-cols-12 md:gap-12">
-          <div className="md:col-span-7 animate-editorial-rise">
-            <div className="flex items-center gap-3 font-mono-meta text-muted-foreground">
-              <span className="text-primary">{String(idx + 1).padStart(2, "0")}</span>
-              <span>/</span>
-              <span>{work.category}</span>
-              {work.year && (
-                <>
-                  <span>·</span>
-                  <span>{work.year}</span>
-                </>
-              )}
-            </div>
+          <div className="md:col-span-7">
+            <Reveal immediate variant="fade" delay={30}>
+              <div className="flex items-center gap-3 font-mono-meta text-muted-foreground">
+                <span className="text-primary">{String(idx + 1).padStart(2, "0")}</span>
+                <span>/</span>
+                <span>{work.category}</span>
+                {work.year && (
+                  <>
+                    <span>·</span>
+                    <span>{work.year}</span>
+                  </>
+                )}
+              </div>
+            </Reveal>
 
             <h1 className="mt-4 font-display text-[clamp(2.65rem,5.5vw,4.65rem)] font-normal leading-[1.03] tracking-[-0.02em] text-foreground">
-              {work.title}
+              <Reveal immediate variant="line" delay={80}>
+                {work.title}
+              </Reveal>
             </h1>
             {work.subtitle && (
-              <p className="mt-2 font-editorial text-2xl italic text-muted-foreground sm:text-3xl">
-                {work.subtitle}
-              </p>
+              <Reveal immediate variant="fade" delay={140}>
+                <p className="mt-2 font-editorial text-2xl italic text-muted-foreground sm:text-3xl">
+                  {work.subtitle}
+                </p>
+              </Reveal>
             )}
           </div>
 
-          <div
-            className="flex flex-col justify-end md:col-span-5 animate-editorial-rise"
-            style={{ animationDelay: "90ms" }}
-          >
+          <div className="flex flex-col justify-end md:col-span-5">
             {work.description && (
-              <p className="text-base leading-[1.72] text-muted-foreground md:text-[17px]">
-                {work.description}
-              </p>
+              <Reveal immediate variant="fade" delay={160}>
+                <p className="text-base leading-[1.72] text-muted-foreground md:text-[17px]">
+                  {work.description}
+                </p>
+              </Reveal>
             )}
           </div>
         </header>
 
         {/* Project Details Strip */}
-        <dl className="mt-10 grid grid-cols-2 gap-6 border-y border-rule py-6 sm:grid-cols-4">
-          <div>
-            <dt className="font-mono-meta text-[10px] text-muted-foreground">Category</dt>
-            <dd className="mt-1.5 text-sm font-medium text-foreground">{work.category}</dd>
-          </div>
-          {work.client && (
+        <Reveal immediate variant="fade" delay={200}>
+          <dl className="mt-10 grid grid-cols-2 gap-6 border-y border-rule py-6 sm:grid-cols-4">
             <div>
-              <dt className="font-mono-meta text-[10px] text-muted-foreground">Context</dt>
-              <dd className="mt-1.5 text-sm font-medium text-foreground">{work.client}</dd>
+              <dt className="font-mono-meta text-[10px] text-muted-foreground">Category</dt>
+              <dd className="mt-1.5 text-sm font-medium text-foreground">{work.category}</dd>
             </div>
-          )}
-          {work.year && (
-            <div>
-              <dt className="font-mono-meta text-[10px] text-muted-foreground">Year</dt>
-              <dd className="mt-1.5 text-sm font-medium text-foreground">{work.year}</dd>
-            </div>
-          )}
-          {work.medium && (
-            <div>
-              <dt className="font-mono-meta text-[10px] text-muted-foreground">
-                Tools &amp; Techniques
-              </dt>
-              <dd className="mt-1.5 text-sm font-medium text-foreground">{work.medium}</dd>
-            </div>
-          )}
-        </dl>
+            {work.client && (
+              <div>
+                <dt className="font-mono-meta text-[10px] text-muted-foreground">Context</dt>
+                <dd className="mt-1.5 text-sm font-medium text-foreground">{work.client}</dd>
+              </div>
+            )}
+            {work.year && (
+              <div>
+                <dt className="font-mono-meta text-[10px] text-muted-foreground">Year</dt>
+                <dd className="mt-1.5 text-sm font-medium text-foreground">{work.year}</dd>
+              </div>
+            )}
+            {work.medium && (
+              <div>
+                <dt className="font-mono-meta text-[10px] text-muted-foreground">
+                  Tools &amp; Techniques
+                </dt>
+                <dd className="mt-1.5 text-sm font-medium text-foreground">{work.medium}</dd>
+              </div>
+            )}
+          </dl>
+        </Reveal>
 
         {/* Prominent Hero Visual */}
-        <div
-          className="mt-12 animate-editorial-rise md:mt-16"
-          style={{ animationDelay: "140ms" }}
+        <ParallaxImage
+          immediate
+          delay={220}
+          strength={10}
+          overscan={1}
+          className="mt-12 border border-rule bg-surface md:mt-16"
         >
           <button
             type="button"
             onClick={() => setLightboxIndex(0)}
-            className="group block w-full cursor-zoom-in overflow-hidden border border-rule bg-surface text-left transition-colors duration-300 hover:border-primary/40 focus-visible:outline-2 focus-visible:outline-primary"
+            className="group block w-full cursor-zoom-in overflow-hidden text-left transition-colors duration-300 focus-visible:outline-2 focus-visible:outline-primary"
             aria-label={`Inspect ${work.title} artwork full screen`}
           >
             <img
@@ -204,35 +215,43 @@ export function ProjectDetail({ works, projectSlug }: ProjectDetailProps) {
               className="mx-auto block max-h-[82vh] w-full object-contain transition-transform duration-700 ease-out group-hover:scale-[1.01]"
             />
           </button>
-        </div>
+        </ParallaxImage>
 
         {/* Project Information (Overview & Concept) */}
         {(work.story || work.description) && (
           <section className="mt-14 grid gap-8 border-t border-rule pt-12 md:mt-20 md:grid-cols-12 md:gap-12">
             <div className="md:col-span-4">
-              <p className="font-mono-meta text-primary">Project Information</p>
+              <Reveal variant="fade" delay={0}>
+                <p className="font-mono-meta text-primary">Project Information</p>
+              </Reveal>
               <h2 className="mt-2 font-display text-3xl font-normal text-foreground">
-                Concept &amp; approach
+                <Reveal variant="line" delay={80}>
+                  Concept &amp; approach
+                </Reveal>
               </h2>
             </div>
             <div className="space-y-6 md:col-span-8">
               {work.description && (
-                <div>
-                  <p className="font-mono-meta text-[10px] text-muted-foreground">Overview</p>
-                  <p className="mt-2 max-w-2xl text-base leading-[1.75] text-foreground/90">
-                    {work.description}
-                  </p>
-                </div>
+                <Reveal variant="fade" delay={120}>
+                  <div>
+                    <p className="font-mono-meta text-[10px] text-muted-foreground">Overview</p>
+                    <p className="mt-2 max-w-2xl text-base leading-[1.75] text-foreground/90">
+                      {work.description}
+                    </p>
+                  </div>
+                </Reveal>
               )}
               {work.story && (
-                <div>
-                  <p className="font-mono-meta text-[10px] text-muted-foreground">
-                    Creative Concept &amp; Execution
-                  </p>
-                  <p className="mt-2 max-w-2xl text-base leading-[1.75] text-muted-foreground">
-                    {work.story}
-                  </p>
-                </div>
+                <Reveal variant="fade" delay={200}>
+                  <div>
+                    <p className="font-mono-meta text-[10px] text-muted-foreground">
+                      Creative Concept &amp; Execution
+                    </p>
+                    <p className="mt-2 max-w-2xl text-base leading-[1.75] text-muted-foreground">
+                      {work.story}
+                    </p>
+                  </div>
+                </Reveal>
               )}
             </div>
           </section>
@@ -243,9 +262,13 @@ export function ProjectDetail({ works, projectSlug }: ProjectDetailProps) {
           <section className="mt-16 border-t border-rule pt-12 md:mt-20">
             <div className="mb-10 flex flex-wrap items-baseline justify-between gap-4">
               <div>
-                <p className="font-mono-meta text-primary">Project Gallery</p>
+                <Reveal variant="fade" delay={0}>
+                  <p className="font-mono-meta text-primary">Project Gallery</p>
+                </Reveal>
                 <h2 className="mt-1 font-display text-3xl font-normal text-foreground">
-                  Visual plates
+                  <Reveal variant="line" delay={80}>
+                    Visual plates
+                  </Reveal>
                 </h2>
               </div>
               <span className="font-mono-meta text-[10px] text-muted-foreground">
@@ -255,31 +278,36 @@ export function ProjectDetail({ works, projectSlug }: ProjectDetailProps) {
 
             <div className="space-y-10 md:space-y-14">
               {gallerySlides.map((slideUrl, i) => (
-                <figure
-                  key={slideUrl}
-                  className="space-y-3 animate-editorial-rise"
-                  style={{ animationDelay: `${Math.min(i * 60, 240)}ms` }}
-                >
-                  <button
-                    type="button"
-                    onClick={() => setLightboxIndex(i + 1)}
-                    className="group block w-full cursor-zoom-in overflow-hidden border border-rule bg-surface transition-colors duration-300 hover:border-primary/40 focus-visible:outline-2 focus-visible:outline-primary"
-                    aria-label={`Open ${work.title} plate ${i + 1} full screen`}
+                <figure key={slideUrl} className="space-y-3">
+                  <ParallaxImage
+                    delay={60}
+                    strength={10}
+                    overscan={1}
+                    className="border border-rule bg-surface transition-colors duration-300 hover:border-primary/40"
                   >
-                    <img
-                      src={slideUrl}
-                      alt={`${work.title} — visual plate ${i + 1}`}
-                      loading="lazy"
-                      className="mx-auto block w-full max-w-[1180px] object-contain transition-transform duration-500 ease-out group-hover:scale-[1.008]"
-                    />
-                  </button>
-                  <figcaption className="flex items-center justify-between text-xs text-muted-foreground">
-                    <span className="font-mono-meta text-[10px]">
-                      Plate {String(i + 1).padStart(2, "0")} /{" "}
-                      {String(gallerySlides.length).padStart(2, "0")}
-                    </span>
-                    <span>{work.title}</span>
-                  </figcaption>
+                    <button
+                      type="button"
+                      onClick={() => setLightboxIndex(i + 1)}
+                      className="group block w-full cursor-zoom-in overflow-hidden focus-visible:outline-2 focus-visible:outline-primary"
+                      aria-label={`Open ${work.title} plate ${i + 1} full screen`}
+                    >
+                      <img
+                        src={slideUrl}
+                        alt={`${work.title} — visual plate ${i + 1}`}
+                        loading="lazy"
+                        className="mx-auto block w-full max-w-[1180px] object-contain transition-transform duration-500 ease-out group-hover:scale-[1.008]"
+                      />
+                    </button>
+                  </ParallaxImage>
+                  <Reveal variant="fade" delay={140}>
+                    <figcaption className="flex items-center justify-between text-xs text-muted-foreground">
+                      <span className="font-mono-meta text-[10px]">
+                        Plate {String(i + 1).padStart(2, "0")} /{" "}
+                        {String(gallerySlides.length).padStart(2, "0")}
+                      </span>
+                      <span>{work.title}</span>
+                    </figcaption>
+                  </Reveal>
                 </figure>
               ))}
             </div>

@@ -2,6 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { ArrowUpRight } from "lucide-react";
 import type { Work } from "@/lib/works";
 import { cn } from "@/lib/utils";
+import { ParallaxImage, Reveal } from "./scroll-reveal";
 
 export type ShowcaseCardSize = "wide" | "landscape" | "square" | "portrait";
 export type ArchiveCardVariant = "wide" | "standard" | "tall" | "offset";
@@ -14,6 +15,7 @@ interface ProjectCardProps {
   archiveVariant?: ArchiveCardVariant;
   className?: string;
   isDuplicate?: boolean;
+  cardDelay?: number;
 }
 
 const SHOWCASE_FRAME_CLASSES: Record<ShowcaseCardSize, string> = {
@@ -38,6 +40,7 @@ export function ProjectCard({
   archiveVariant = "standard",
   className,
   isDuplicate = false,
+  cardDelay = 0,
 }: ProjectCardProps) {
   const num = String((index >= 0 ? index : 0) + 1).padStart(2, "0");
 
@@ -49,7 +52,7 @@ export function ProjectCard({
         tabIndex={isDuplicate ? -1 : undefined}
         aria-hidden={isDuplicate || undefined}
         className={cn(
-          "group relative block shrink-0 overflow-hidden border border-rule bg-surface transition-colors duration-300 hover:border-primary/45 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary",
+          "group relative block shrink-0 overflow-hidden border border-rule bg-surface transition-[transform,border-color] duration-500 ease-out hover:scale-[1.012] hover:border-primary/45 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary",
           SHOWCASE_FRAME_CLASSES[showcaseSize],
           className,
         )}
@@ -61,18 +64,18 @@ export function ProjectCard({
           className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.035]"
         />
 
-        {/* Soft warm-ivory hover overlay showing title and category */}
+        {/* Soft warm-ivory hover overlay with staggered category label and title reveal */}
         <div
           className={cn(
-            "pointer-events-none absolute inset-x-0 bottom-0 flex items-end justify-between gap-3 border-t border-rule bg-background/92 px-4 py-3 backdrop-blur-md transition-all duration-300",
-            "opacity-100 md:translate-y-1.5 md:opacity-0 md:group-hover:translate-y-0 md:group-hover:opacity-100 md:group-focus-visible:translate-y-0 md:group-focus-visible:opacity-100",
+            "pointer-events-none absolute inset-x-0 bottom-0 flex items-end justify-between gap-3 border-t border-rule bg-background/92 px-4 py-3 backdrop-blur-md transition-all duration-300 ease-out",
+            "opacity-100 md:translate-y-2 md:opacity-0 md:group-hover:translate-y-0 md:group-hover:opacity-100 md:group-focus-visible:translate-y-0 md:group-focus-visible:opacity-100",
           )}
         >
           <div className="min-w-0">
-            <p className="truncate font-mono-meta text-[10px] text-primary">
+            <p className="truncate font-mono-meta text-[10px] text-primary transition-all duration-300 md:translate-y-1 md:opacity-0 md:group-hover:translate-y-0 md:group-hover:opacity-100 md:group-focus-visible:translate-y-0 md:group-focus-visible:opacity-100">
               {num} · {work.category}
             </p>
-            <h3 className="mt-0.5 truncate font-display text-lg leading-tight text-foreground sm:text-xl">
+            <h3 className="mt-0.5 truncate font-display text-lg leading-tight text-foreground transition-all delay-75 duration-300 sm:text-xl md:translate-y-1.5 md:opacity-0 md:group-hover:translate-y-0 md:group-hover:opacity-100 md:group-focus-visible:translate-y-0 md:group-focus-visible:opacity-100">
               {work.title}
               {work.subtitle ? (
                 <span className="ml-1.5 font-editorial text-sm italic text-muted-foreground">
@@ -103,15 +106,21 @@ export function ProjectCard({
         params={{ projectSlug: work.id }}
         className="editorial-work-media relative block overflow-hidden bg-surface focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
       >
-        <img
-          src={work.imageSrc}
-          alt={`${work.title}${work.subtitle ? ` — ${work.subtitle}` : ""}`}
-          loading="lazy"
-          className={cn("block w-full object-cover", ARCHIVE_ASPECT_CLASSES[archiveVariant])}
-        />
+        <ParallaxImage delay={cardDelay} strength={12} overscan={1.045}>
+          <img
+            src={work.imageSrc}
+            alt={`${work.title}${work.subtitle ? ` — ${work.subtitle}` : ""}`}
+            loading="lazy"
+            className={cn("block w-full object-cover", ARCHIVE_ASPECT_CLASSES[archiveVariant])}
+          />
+        </ParallaxImage>
       </Link>
 
-      <div className="mt-4 flex flex-1 flex-col justify-between px-0.5 pb-0.5">
+      <Reveal
+        variant="up"
+        delay={cardDelay + 110}
+        className="mt-4 flex flex-1 flex-col justify-between px-0.5 pb-0.5"
+      >
         <div>
           <div className="flex items-center justify-between gap-2 font-mono-meta text-[10px] text-muted-foreground">
             <span className="truncate">
@@ -145,7 +154,7 @@ export function ProjectCard({
             </p>
           )}
         </div>
-      </div>
+      </Reveal>
     </article>
   );
 }

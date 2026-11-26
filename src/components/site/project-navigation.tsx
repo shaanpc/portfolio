@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import type { Work } from "@/lib/works";
+import { Reveal } from "./scroll-reveal";
 
 interface ProjectNavigationProps {
   prevWork?: Work;
@@ -11,10 +12,8 @@ export function ProjectNavigation({ prevWork, nextWork }: ProjectNavigationProps
   if (!prevWork && !nextWork) return null;
 
   return (
-    <nav
-      aria-label="Adjacent projects"
-      className="mt-20 border-t border-rule pt-12 animate-editorial-rise"
-    >
+    <Reveal variant="up" delay={60}>
+      <nav aria-label="Adjacent projects" className="mt-20 border-t border-rule pt-12">
       <div className="grid gap-8 sm:grid-cols-2">
         <div>
           {prevWork && (
@@ -79,5 +78,6 @@ export function ProjectNavigation({ prevWork, nextWork }: ProjectNavigationProps
         </Link>
       </div>
     </nav>
+    </Reveal>
   );
 }

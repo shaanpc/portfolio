@@ -3,6 +3,7 @@ import { ArrowUpRight, Menu, X } from "lucide-react";
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { DESIGNER_PROFILE } from "@/data/profile";
 import { cn } from "@/lib/utils";
+import { useIntroReady } from "./site-preloader";
 
 export interface NavSectionItem {
   id: string;
@@ -19,6 +20,7 @@ export const NAV_SECTIONS: NavSectionItem[] = [
 const DOT_SIZE = 5;
 
 export function SiteSidebar() {
+  const introReady = useIntroReady();
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const navigate = useNavigate();
 
@@ -213,11 +215,17 @@ export function SiteSidebar() {
     setActiveId(id);
 
     if (isHome) {
+      if (id === "overview") {
+        clickLockUntilRef.current = performance.now() + 900;
+        window.scrollTo({ top: 0, behavior: "smooth" });
+        window.history.replaceState(null, "", "/");
+        return;
+      }
       const target = document.getElementById(id);
       if (target) {
         clickLockUntilRef.current = performance.now() + 900;
         target.scrollIntoView({ behavior: "smooth", block: "start" });
-        window.history.replaceState(null, "", id === "overview" ? "/" : `#${id}`);
+        window.history.replaceState(null, "", `#${id}`);
       }
       return;
     }
@@ -243,7 +251,7 @@ export function SiteSidebar() {
         className="fixed inset-y-0 left-0 z-40 hidden border-r border-rule bg-background text-foreground md:flex md:w-[208px] md:flex-col md:justify-between md:px-8 md:py-11 lg:w-[clamp(220px,19vw,260px)] lg:px-10 lg:py-12"
       >
         {/* Top identity */}
-        <div className="sidebar-enter">
+        <div className={introReady ? "sidebar-enter" : "opacity-0"}>
           <Link
             to="/"
             onClick={(e) => handleNavClick(e as unknown as React.MouseEvent<HTMLAnchorElement>, "overview")}
@@ -262,7 +270,7 @@ export function SiteSidebar() {
             aria-hidden="true"
             className={cn(
               "nav-dot pointer-events-none absolute left-0 top-0 h-[5px] w-[5px] rounded-full bg-foreground",
-              dotPos ? "opacity-100" : "opacity-0",
+              introReady && dotPos ? "opacity-100" : "opacity-0",
             )}
             style={
               dotPos
@@ -271,7 +279,7 @@ export function SiteSidebar() {
             }
           />
 
-          {NAV_SECTIONS.map((item) => {
+          {NAV_SECTIONS.map((item, idx) => {
             const isActive = activeId === item.id;
             return (
               <a
@@ -282,8 +290,10 @@ export function SiteSidebar() {
                 href={`/#${item.id}`}
                 aria-current={isActive ? "location" : undefined}
                 onClick={(e) => handleNavClick(e, item.id)}
+                style={{ animationDelay: `${60 + idx * 50}ms` }}
                 className={cn(
                   "group relative flex items-center py-2 text-[13.5px] leading-snug tracking-[-0.005em] transition-colors duration-200",
+                  introReady ? "sidebar-enter" : "opacity-0",
                   isActive
                     ? "font-medium text-foreground"
                     : "font-normal text-muted-foreground hover:text-foreground",
@@ -302,7 +312,13 @@ export function SiteSidebar() {
         </nav>
 
         {/* Minimal external footer links inside sidebar */}
-        <div className="sidebar-enter flex flex-col gap-2.5 text-xs text-muted-foreground">
+        <div
+          className={cn(
+            "flex flex-col gap-2.5 text-xs text-muted-foreground",
+            introReady ? "sidebar-enter" : "opacity-0",
+          )}
+          style={{ animationDelay: "260ms" }}
+        >
           <a
             href={DESIGNER_PROFILE.links.behance}
             target="_blank"

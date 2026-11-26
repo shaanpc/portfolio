@@ -2,6 +2,7 @@ import { ArrowUp, Instagram, Mail, Moon, Sun } from "lucide-react";
 import { useEffect, useState } from "react";
 import { DESIGNER_PROFILE } from "@/data/profile";
 import { cn } from "@/lib/utils";
+import { useIntroReady } from "./site-preloader";
 
 type Theme = "light" | "dark";
 
@@ -50,6 +51,7 @@ function LinkedInIcon({ className }: { className?: string }) {
 }
 
 export function FloatingDock() {
+  const introReady = useIntroReady();
   const [theme, setTheme] = useState<Theme>(() => readInitialTheme());
   const [atTop, setAtTop] = useState(true);
 
@@ -88,7 +90,12 @@ export function FloatingDock() {
       role="region"
       aria-label="Quick links and appearance"
     >
-      <div className="dock-enter floating-dock-pill pointer-events-auto flex max-w-full items-center gap-0.5 rounded-full border p-1.5 sm:gap-1.5 sm:p-2">
+      <div
+        className={cn(
+          "floating-dock-pill pointer-events-auto flex max-w-full items-center gap-0.5 rounded-full border p-1.5 sm:gap-1.5 sm:p-2",
+          introReady ? "dock-enter" : "opacity-0",
+        )}
+      >
         {/* Dark-mode travelling white glow layers (hidden in light mode) */}
         <span aria-hidden="true" className="dock-halo-glow" />
         <span aria-hidden="true" className="dock-dark-surface" />

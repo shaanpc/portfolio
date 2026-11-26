@@ -5,6 +5,7 @@ import { DESIGNER_PROFILE } from "@/data/profile";
 import { ARCHIVE_CATEGORIES, filterWorks, type Work } from "@/lib/works";
 import { CategoryFilter } from "./category-filter";
 import { ProjectCard, type ArchiveCardVariant } from "./project-card";
+import { Reveal } from "./scroll-reveal";
 
 interface ProjectArchiveProps {
   works: Work[];
@@ -86,37 +87,43 @@ export function ProjectArchive({ works, initialCategory = "All" }: ProjectArchiv
 
       {/* Editorial Archive Header */}
       <header className="mt-12 grid gap-8 md:mt-16 md:grid-cols-12 md:items-end md:gap-12">
-        <div className="md:col-span-7 animate-editorial-rise" style={{ animationDelay: "60ms" }}>
-          <p className="font-mono-meta text-primary">Project Archive</p>
+        <div className="md:col-span-7">
+          <Reveal immediate variant="fade" delay={40}>
+            <p className="font-mono-meta text-primary">Project Archive</p>
+          </Reveal>
           <h1 className="mt-3 font-display text-[clamp(2.75rem,5.5vw,4.75rem)] font-normal leading-[1.02] tracking-[-0.02em] text-foreground">
-            All{" "}
-            <span className="font-editorial italic font-normal text-primary">Projects</span>{" "}
-            <span className="font-editorial text-[clamp(1.6rem,2.5vw,2.25rem)] font-normal italic text-muted-foreground">
-              ({String(works.length).padStart(2, "0")})
-            </span>
+            <Reveal immediate variant="line" delay={100}>
+              All{" "}
+              <span className="font-editorial italic font-normal text-primary">Projects</span>{" "}
+              <span className="font-editorial text-[clamp(1.6rem,2.5vw,2.25rem)] font-normal italic text-muted-foreground">
+                ({String(works.length).padStart(2, "0")})
+              </span>
+            </Reveal>
           </h1>
         </div>
 
-        <div className="md:col-span-5 animate-editorial-rise" style={{ animationDelay: "120ms" }}>
-          <p className="text-[15px] leading-[1.72] text-muted-foreground">
-            <span className="font-editorial text-[17px] italic text-foreground">
-              {DESIGNER_PROFILE.name}
-            </span>{" "}
-            — Complete archive of brand identity systems, luxury structural packaging,
-            illustrated storytelling, social campaigns, and cinematic photo manipulations.
-          </p>
+        <div className="md:col-span-5">
+          <Reveal immediate variant="fade" delay={180}>
+            <p className="text-[15px] leading-[1.72] text-muted-foreground">
+              <span className="font-editorial text-[17px] italic text-foreground">
+                {DESIGNER_PROFILE.name}
+              </span>{" "}
+              — Complete archive of brand identity systems, luxury structural packaging,
+              illustrated storytelling, social campaigns, and cinematic photo manipulations.
+            </p>
+          </Reveal>
         </div>
       </header>
 
       {/* Horizontal Category Filter */}
-      <div className="mt-10 md:mt-14 animate-editorial-rise" style={{ animationDelay: "160ms" }}>
+      <Reveal immediate variant="up" delay={220} className="mt-10 md:mt-14">
         <CategoryFilter
           categories={categories}
           activeCategory={activeCategory}
           onSelect={setActiveCategory}
           counts={counts}
         />
-      </div>
+      </Reveal>
 
       {/* Filtered Editorial Grid */}
       {visibleWorks.length === 0 ? (
@@ -140,16 +147,13 @@ export function ProjectArchive({ works, initialCategory = "All" }: ProjectArchiv
           {visibleWorks.map((work, pos) => {
             const slot = getArchiveSlot(pos);
             return (
-              <div
-                key={work.id}
-                className={`animate-editorial-rise ${slot.spanClass}`}
-                style={{ animationDelay: `${Math.min(pos * 45, 270)}ms` }}
-              >
+              <div key={work.id} className={slot.spanClass}>
                 <ProjectCard
                   work={work}
                   index={indexById.get(work.id) ?? pos}
                   mode="archive"
                   archiveVariant={slot.variant}
+                  cardDelay={Math.min((pos % 3) * 85, 220)}
                 />
               </div>
             );

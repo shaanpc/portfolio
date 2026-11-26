@@ -16,9 +16,11 @@
 :root {
   color-scheme: light;
   --dock-bg: rgba(255, 255, 255, 0.25);
-  --dock-border: rgba(255, 255, 255, 0.65);
+  --dock-border: rgba(255, 255, 255, 0.55);
   --dock-hover: rgba(20, 20, 19, 0.06);
-  --dock-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+  --dock-shadow:
+    0 0 22px 2px rgba(255, 255, 255, 0.12),
+    0 8px 28px rgba(0, 0, 0, 0.06);
 }
 
 :root[data-theme="dark"] {
@@ -42,7 +44,7 @@
 @layer base {
   html {
     scroll-behavior: smooth;
-    scroll-padding-top: 3.5rem;
+    scroll-padding-top: 4.25rem;
     background-color: var(--color-background);
     color: var(--color-foreground);
     font-family: "DM Sans", system-ui, -apple-system, sans-serif;
@@ -50,6 +52,12 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     transition: background-color 240ms ease, color 240ms ease;
+  }
+
+  @media (min-width: 768px) {
+    html {
+      scroll-padding-top: 1.5rem;
+    }
   }
 
   body {
@@ -129,7 +137,7 @@
 }
 
 .sidebar-enter {
-  animation: editorial-rise 0.6s cubic-bezier(0.2, 0, 0, 1) both;
+  animation: editorial-rise 0.5s cubic-bezier(0.19, 1, 0.22, 1) both;
 }
 
 @keyframes dock-rise {
@@ -145,7 +153,7 @@
 }
 
 .dock-enter {
-  animation: dock-rise 0.65s cubic-bezier(0.22, 1, 0.36, 1) 180ms backwards;
+  animation: dock-rise 0.7s cubic-bezier(0.22, 1, 0.36, 1) 240ms backwards;
 }
 
 .floating-dock-pill {
@@ -201,23 +209,23 @@
   }
 }
 
-/* Dark-mode-only travelling concentrated white highlight along the pill border */
+/* Dark-mode-only ultra-subtle ambient dock glow (no bright border ring) */
 :root[data-theme="dark"] .floating-dock-pill {
   background: transparent !important;
-  border-color: rgba(255, 255, 255, 0.12) !important;
+  border-color: rgba(255, 255, 255, 0.1) !important;
   box-shadow:
-    0 14px 36px rgba(0, 0, 0, 0.78),
-    0 0 22px rgba(255, 255, 255, 0.04) !important;
+    0 0 22px 2px rgba(255, 255, 255, 0.12),
+    0 10px 30px rgba(0, 0, 0, 0.55) !important;
   transition:
     box-shadow 300ms ease,
     border-color 300ms ease;
 }
 
 :root[data-theme="dark"] .floating-dock-pill:hover {
-  border-color: rgba(255, 255, 255, 0.22) !important;
+  border-color: rgba(255, 255, 255, 0.15) !important;
   box-shadow:
-    0 16px 42px rgba(0, 0, 0, 0.85),
-    0 0 32px rgba(255, 255, 255, 0.12) !important;
+    0 0 24px 2px rgba(255, 255, 255, 0.14),
+    0 12px 34px rgba(0, 0, 0, 0.62) !important;
 }
 
 :root[data-theme="dark"] .dock-dark-surface {
@@ -227,7 +235,7 @@
   z-index: 0;
   border-radius: inherit;
   background: var(--dock-bg);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.09);
+  box-shadow: none;
 }
 
 /* Graceful opaque-leaning fallback for browsers without backdrop-filter support */
@@ -241,106 +249,18 @@
   }
 }
 
-/* Masked 1.5px border ring clipping a rotating concentrated white/silver conic beam */
-:root[data-theme="dark"] .dock-border-glow {
-  display: block;
-  position: absolute;
-  inset: -1px;
-  z-index: 2;
-  padding: 1.5px;
-  border-radius: inherit;
-  overflow: hidden;
-  -webkit-mask:
-    linear-gradient(#000 0 0) content-box,
-    linear-gradient(#000 0 0);
-  -webkit-mask-composite: xor;
-  mask:
-    linear-gradient(#000 0 0) content-box,
-    linear-gradient(#000 0 0);
-  mask-composite: exclude;
-  opacity: 0.94;
-  transition: opacity 280ms ease, filter 280ms ease;
-}
-
-:root[data-theme="dark"] .dock-border-glow::before {
-  content: "";
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  width: 520px;
-  height: 520px;
-  background: conic-gradient(
-    from 0deg,
-    transparent 0deg,
-    transparent 292deg,
-    rgba(229, 229, 229, 0.22) 318deg,
-    rgba(229, 229, 229, 0.58) 338deg,
-    #ffffff 352deg,
-    rgba(255, 255, 255, 0.45) 357deg,
-    transparent 360deg
-  );
-  animation: dock-beam-rotate 3.8s linear infinite;
-}
-
-/* Outer diffused white halo synchronized with the moving border segment (masked outside glass interior) */
+/* Keep outer glow uniform via box-shadow rather than an uneven elliptical halo */
+:root[data-theme="dark"] .dock-border-glow,
 :root[data-theme="dark"] .dock-halo-glow {
-  display: block;
-  position: absolute;
-  inset: -18px;
-  z-index: -1;
-  padding: 18px;
-  border-radius: inherit;
-  overflow: hidden;
-  -webkit-mask:
-    linear-gradient(#000 0 0) content-box,
-    linear-gradient(#000 0 0);
-  -webkit-mask-composite: xor;
-  mask:
-    linear-gradient(#000 0 0) content-box,
-    linear-gradient(#000 0 0);
-  mask-composite: exclude;
-  opacity: 0.68;
-  transition: opacity 280ms ease, filter 280ms ease;
+  display: none;
 }
 
-:root[data-theme="dark"] .dock-halo-glow::before {
-  content: "";
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  width: 580px;
-  height: 580px;
-  filter: blur(11px);
-  background: conic-gradient(
-    from 0deg,
-    transparent 0deg,
-    transparent 296deg,
-    rgba(229, 229, 229, 0.16) 322deg,
-    rgba(255, 255, 255, 0.62) 352deg,
-    rgba(255, 255, 255, 0.22) 358deg,
-    transparent 360deg
-  );
-  animation: dock-beam-rotate 3.8s linear infinite;
-}
-
-:root[data-theme="dark"] .floating-dock-pill:hover .dock-border-glow {
-  opacity: 1;
-  filter: brightness(1.22);
-}
-
-:root[data-theme="dark"] .floating-dock-pill:hover .dock-halo-glow {
-  opacity: 0.95;
-}
-
-:root[data-theme="dark"] .floating-dock-pill:hover .dock-halo-glow::before {
-  filter: blur(13px) brightness(1.25);
-}
-
-/* Dark-mode Resume button: simple dark pill with subtle border, white text, and subtle hover (no glow) */
+/* Dark-mode Resume button: simple dark pill with subtle border, white text, no glow */
 :root[data-theme="dark"] .floating-dock-resume {
   background-color: #161618 !important;
   color: #ffffff !important;
-  border: 1px solid rgba(255, 255, 255, 0.16);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: none !important;
   transition:
     background-color 200ms ease,
     border-color 200ms ease,
@@ -349,7 +269,7 @@
 
 :root[data-theme="dark"] .floating-dock-resume:hover {
   background-color: #1f1f22 !important;
-  border-color: rgba(255, 255, 255, 0.28);
+  border-color: rgba(255, 255, 255, 0.22);
 }
 
 :root[data-theme="dark"] .floating-dock-icon {
@@ -440,55 +360,147 @@
   .editorial-work:hover .editorial-work-media img {
     transform: none;
   }
-}
 
-/* Global mouse-following ambient radial glow */
-.cursor-glow-layer {
-  position: fixed;
-  inset: 0;
-  z-index: 45;
-  pointer-events: none;
-  overflow: hidden;
-}
-
-.cursor-glow-orb {
-  position: fixed;
-  left: 0;
-  top: 0;
-  width: 680px;
-  height: 680px;
-  border-radius: 9999px;
-  pointer-events: none;
-  will-change: transform, opacity;
-  opacity: 0;
-  transition: opacity 320ms ease;
-  background: radial-gradient(
-    circle,
-    rgba(201, 79, 50, 0.14) 0%,
-    rgba(218, 108, 68, 0.08) 28%,
-    rgba(235, 165, 130, 0.035) 52%,
-    transparent 74%
-  );
-}
-
-.cursor-glow-orb[data-active="true"] {
-  opacity: 1;
-}
-
-:root[data-theme="dark"] .cursor-glow-orb {
-  background: radial-gradient(
-    circle,
-    rgba(224, 90, 57, 0.18) 0%,
-    rgba(224, 90, 57, 0.09) 30%,
-    rgba(241, 239, 233, 0.025) 56%,
-    transparent 75%
-  );
-}
-
-@media (hover: none) and (pointer: coarse), (prefers-reduced-motion: reduce) {
-  .cursor-glow-layer {
-    display: none !important;
+  .scroll-reveal,
+  .scroll-reveal-line-inner,
+  .page-fade-enter,
+  .preloader-wordmark,
+  .preloader-line {
+    opacity: 1 !important;
+    transform: none !important;
+    clip-path: none !important;
+    transition: none !important;
+    animation: none !important;
   }
+}
+
+/* Minimal monochrome preloader sweep & smooth fade-out */
+@keyframes preloader-word-in {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 8px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes preloader-progress {
+  0% {
+    transform: scaleX(0);
+  }
+  100% {
+    transform: scaleX(1);
+  }
+}
+
+.preloader-wordmark {
+  animation: preloader-word-in 420ms cubic-bezier(0.19, 1, 0.22, 1) both;
+}
+
+.preloader-line {
+  transform-origin: left center;
+  animation: preloader-progress 820ms cubic-bezier(0.22, 1, 0.36, 1) 80ms both;
+}
+
+.site-preloader {
+  opacity: 1;
+  transition: opacity 420ms cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.site-preloader-exit {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Hero portrait 1.1s cinematic entrance duration */
+.hero-portrait-reveal {
+  transition-duration: 1100ms, 1100ms, 1100ms !important;
+}
+
+.hero-headline-line .scroll-reveal-line-inner {
+  transition-duration: 900ms, 900ms;
+}
+
+.hero-description-reveal {
+  transition-duration: 700ms, 700ms !important;
+}
+
+/* Editorial scroll-reveal transitions & subtle page transitions */
+.scroll-reveal {
+  will-change: opacity, transform, clip-path;
+  transition:
+    opacity 840ms cubic-bezier(0.19, 1, 0.22, 1),
+    transform 920ms cubic-bezier(0.19, 1, 0.22, 1),
+    clip-path 960ms cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.scroll-reveal[data-reveal="up"][data-visible="false"] {
+  opacity: 0;
+  transform: translate3d(0, 34px, 0);
+}
+
+.scroll-reveal[data-reveal="fade"][data-visible="false"] {
+  opacity: 0;
+  transform: translate3d(0, 0, 0);
+}
+
+.scroll-reveal[data-reveal="image"][data-visible="false"] {
+  opacity: 0;
+  transform: translate3d(0, 28px, 0) scale(0.955);
+}
+
+.scroll-reveal[data-reveal="clip"][data-visible="false"] {
+  opacity: 0;
+  transform: translate3d(0, 28px, 0) scale(0.96);
+  clip-path: inset(12% 0 0 0);
+}
+
+.scroll-reveal[data-visible="true"] {
+  opacity: 1;
+  transform: translate3d(0, 0, 0) scale(1);
+  clip-path: inset(0 0 0 0);
+}
+
+.scroll-reveal-line {
+  display: block;
+  overflow: clip;
+  padding-bottom: 0.14em;
+  margin-bottom: -0.14em;
+}
+
+.scroll-reveal-line-inner {
+  display: block;
+  will-change: opacity, transform;
+  transition:
+    opacity 820ms cubic-bezier(0.19, 1, 0.22, 1),
+    transform 920ms cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.scroll-reveal-line[data-visible="false"] .scroll-reveal-line-inner {
+  opacity: 0;
+  transform: translate3d(0, 32px, 0);
+}
+
+.scroll-reveal-line[data-visible="true"] .scroll-reveal-line-inner {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+@keyframes page-fade-in {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 6px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.page-fade-enter {
+  animation: page-fade-in 380ms cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
 /* Smooth continuous staggered marquee tracks for Things I Do showcase */
