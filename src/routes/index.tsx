@@ -41,7 +41,7 @@ function Index() {
       >
         <div className="grid flex-1 items-stretch gap-8 lg:min-h-[calc(100vh-5.5rem)] lg:grid-cols-12 lg:gap-8">
           {/* Left Typographic Identity (Vertically Balanced) + Bottom-Left Description */}
-          <div className="flex flex-col justify-between gap-12 pb-2 pt-6 sm:pt-10 lg:col-span-6 lg:gap-10 lg:pb-[140px] lg:pt-[200px] xl:pb-[156px] xl:pt-[215px]">
+          <div className="flex flex-col justify-between gap-12 pb-2 pt-6 sm:pt-10 lg:col-span-6 lg:gap-8 lg:pb-[180px] lg:pt-[200px] xl:pb-[196px] xl:pt-[215px]">
             <h1 className="font-hero text-[clamp(2.1rem,5vw,4.45rem)] font-bold uppercase leading-[1.06] tracking-[-0.015em] text-foreground">
               <span className="block overflow-hidden">
                 <span className="animate-hero-line block">SHAN</span>
@@ -69,10 +69,10 @@ function Index() {
 
           {/* Right Portrait Cutout (object-contain) with Smooth Bottom White Gradient Fade */}
           <div
-            className="flex min-w-0 w-full items-end justify-end self-end lg:col-span-6 lg:pb-[111px] lg:pr-0 xl:pb-[119px] animate-soft-enter"
+            className="flex min-w-0 w-full items-end justify-end self-end lg:col-span-6 lg:pb-0 lg:pr-0 animate-soft-enter"
             style={{ animationDelay: "140ms" }}
           >
-            <div className="relative flex h-[340px] w-full min-w-0 items-end justify-end sm:h-[460px] lg:h-[clamp(600px,90vh,860px)] lg:translate-x-[72px] xl:translate-x-[90px]">
+            <div className="relative flex h-[340px] w-full min-w-0 items-end justify-end sm:h-[460px] lg:h-[clamp(600px,90vh,860px)] lg:-translate-y-[80px] lg:translate-x-[112px] xl:-translate-y-[85px] xl:translate-x-[150px]">
               {/* Background bloom at both shoulder positions */}
               <div
                 aria-hidden="true"
@@ -82,7 +82,7 @@ function Index() {
               <img
                 src="/shan-portrait.png"
                 alt="Shan Mohammed pc — Graphic Designer"
-                width={1656}
+                width={905}
                 height={1076}
                 loading="eager"
                 decoding="sync"
