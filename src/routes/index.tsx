@@ -69,10 +69,10 @@ function Index() {
 
           {/* Right Portrait Cutout (object-contain) with Smooth Bottom White Gradient Fade */}
           <div
-            className="flex min-w-0 w-full items-end justify-end self-end lg:col-span-6 lg:pb-[66px] lg:pr-0 xl:pb-[74px] animate-soft-enter"
+            className="flex min-w-0 w-full items-end justify-end self-end lg:col-span-6 lg:pb-[111px] lg:pr-0 xl:pb-[119px] animate-soft-enter"
             style={{ animationDelay: "140ms" }}
           >
-            <div className="relative flex h-[340px] w-full min-w-0 items-end justify-end sm:h-[460px] lg:h-[clamp(600px,90vh,860px)] lg:translate-x-[35px]">
+            <div className="relative flex h-[340px] w-full min-w-0 items-end justify-end sm:h-[460px] lg:h-[clamp(600px,90vh,860px)] lg:translate-x-[72px] xl:translate-x-[90px]">
               {/* Background bloom at both shoulder positions */}
               <div
                 aria-hidden="true"
