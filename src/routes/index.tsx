@@ -41,7 +41,7 @@ function Index() {
       >
         <div className="grid flex-1 items-stretch gap-8 lg:min-h-[calc(100vh-5.5rem)] lg:grid-cols-12 lg:gap-8">
           {/* Left Typographic Identity (Vertically Balanced) + Bottom-Left Description */}
-          <div className="flex flex-col justify-between gap-12 pb-2 pt-6 sm:pt-10 lg:col-span-6 lg:gap-16 lg:pb-16 lg:pt-28">
+          <div className="flex flex-col justify-between gap-12 pb-2 pt-6 sm:pt-10 lg:col-span-6 lg:gap-14 lg:pb-24 lg:pt-36 xl:pb-28 xl:pt-40">
             <h1 className="font-hero text-[clamp(2.1rem,5vw,4.45rem)] font-bold uppercase leading-[1.06] tracking-[-0.015em] text-foreground">
               <span className="block overflow-hidden">
                 <span className="animate-hero-line block">SHAN</span>
@@ -69,7 +69,7 @@ function Index() {
 
           {/* Right Portrait Cutout (object-contain) with Smooth Bottom White Gradient Fade */}
           <div
-            className="flex min-w-0 w-full items-end justify-end self-end lg:col-span-6 lg:pr-6 xl:pr-10 animate-soft-enter"
+            className="flex min-w-0 w-full items-end justify-end self-end lg:col-span-6 lg:pb-4 lg:pr-0 xl:pb-6 xl:pr-2 animate-soft-enter"
             style={{ animationDelay: "140ms" }}
           >
             <div className="relative flex h-[340px] w-full min-w-0 items-end justify-end sm:h-[460px] lg:h-[clamp(600px,90vh,860px)]">
