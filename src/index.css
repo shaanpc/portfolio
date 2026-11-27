@@ -114,78 +114,50 @@
 }
 
 .hero-portrait-mask {
-  -webkit-mask-image: linear-gradient(
-    169deg,
-    #000 0%,
-    #000 66%,
-    rgba(0, 0, 0, 0.76) 77%,
-    rgba(0, 0, 0, 0.28) 87%,
-    transparent 96%
-  );
-  mask-image: linear-gradient(
-    169deg,
-    #000 0%,
-    #000 66%,
-    rgba(0, 0, 0, 0.76) 77%,
-    rgba(0, 0, 0, 0.28) 87%,
-    transparent 96%
-  );
-}
-
-.hero-portrait-mist {
-  background:
+  -webkit-mask-image:
     linear-gradient(
-      to top,
-      var(--color-background) 6%,
-      color-mix(in srgb, var(--color-background) 80%, transparent) 32%,
-      color-mix(in srgb, var(--color-background) 24%, transparent) 64%,
+      to bottom,
+      #000 0%,
+      #000 84%,
+      rgba(0, 0, 0, 0.76) 90%,
+      rgba(0, 0, 0, 0.34) 95%,
       transparent 100%
     ),
     radial-gradient(
-      ellipse 72% 58% at 88% 96%,
-      var(--color-background) 12%,
-      color-mix(in srgb, var(--color-background) 64%, transparent) 46%,
-      transparent 82%
+      ellipse 47% 88% at 50% 42%,
+      #000 76%,
+      rgba(0, 0, 0, 0.88) 88%,
+      rgba(0, 0, 0, 0.52) 96%,
+      transparent 100%
     );
-}
-
-/* Shoulder glow — white rim light that follows the portrait silhouette + background blooms */
-
-/* drop-shadow on the <img> traces the transparent PNG outline exactly */
-.hero-portrait-glow {
-  filter:
-    drop-shadow(0 0 18px rgba(255, 255, 255, 1))
-    drop-shadow(0 0 42px rgba(255, 255, 255, 0.82))
-    drop-shadow(0 0 72px rgba(255, 255, 255, 0.5));
-}
-
-/* Background bloom divs behind the portrait at both shoulder positions */
-.hero-portrait-shoulder-glow {
-  background:
-    /* left shoulder bloom */
-    radial-gradient(
-      ellipse 70% 52% at 18% 74%,
-      rgba(255, 255, 255, 0.95) 0%,
-      rgba(255, 255, 255, 0.55) 28%,
-      rgba(255, 255, 255, 0.18) 54%,
-      transparent 72%
+  -webkit-mask-composite: source-in;
+  mask-image:
+    linear-gradient(
+      to bottom,
+      #000 0%,
+      #000 84%,
+      rgba(0, 0, 0, 0.76) 90%,
+      rgba(0, 0, 0, 0.34) 95%,
+      transparent 100%
     ),
-    /* right shoulder bloom */
     radial-gradient(
-      ellipse 62% 46% at 94% 70%,
-      rgba(255, 255, 255, 0.90) 0%,
-      rgba(255, 255, 255, 0.48) 30%,
-      rgba(255, 255, 255, 0.14) 56%,
-      transparent 74%
+      ellipse 47% 88% at 50% 42%,
+      #000 76%,
+      rgba(0, 0, 0, 0.88) 88%,
+      rgba(0, 0, 0, 0.52) 96%,
+      transparent 100%
     );
+  mask-composite: intersect;
 }
 
-/* Hide in dark mode */
-:root[data-theme="dark"] .hero-portrait-glow {
-  filter: none;
-}
-:root[data-theme="dark"] .hero-portrait-shoulder-glow {
-  opacity: 0;
+.hero-portrait-mist {
+  background: linear-gradient(
+    to top,
+    var(--color-background) 8%,
+    color-mix(in srgb, var(--color-background) 72%, transparent) 44%,
+    color-mix(in srgb, var(--color-background) 22%, transparent) 78%,
+    transparent 100%
+  );
 }
 
 /* Subtle architectural transitions */

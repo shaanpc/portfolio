@@ -73,12 +73,6 @@ function Index() {
             style={{ animationDelay: "140ms" }}
           >
             <div className="relative flex h-[340px] w-full min-w-0 items-end justify-end sm:h-[460px] lg:h-[clamp(600px,90vh,860px)] lg:-translate-y-[80px] lg:translate-x-[112px] xl:-translate-y-[85px] xl:translate-x-[150px]">
-              {/* Background bloom at both shoulder positions */}
-              <div
-                aria-hidden="true"
-                className="hero-portrait-shoulder-glow pointer-events-none absolute inset-0 z-0"
-              />
-              {/* Portrait — drop-shadow filter traces the transparent PNG outline for rim glow */}
               <img
                 src="/shan-portrait.png"
                 alt="Shan Mohammed pc — Graphic Designer"
@@ -87,12 +81,12 @@ function Index() {
                 loading="eager"
                 decoding="sync"
                 fetchPriority="high"
-                className="hero-portrait-mask hero-portrait-glow pointer-events-none relative z-[1] block h-full w-auto max-w-none object-contain object-bottom"
+                className="hero-portrait-mask pointer-events-none relative z-[1] block h-full w-auto max-w-none object-contain object-bottom"
               />
-              {/* Bottom white mist — dissolves portrait into page background */}
+              {/* Bottom mist — dissolves lower waist into page background */}
               <div
                 aria-hidden="true"
-                className="hero-portrait-mist pointer-events-none absolute inset-x-0 bottom-0 z-[2] h-[38%]"
+                className="hero-portrait-mist pointer-events-none absolute inset-x-0 bottom-0 z-[2] h-[14%]"
               />
             </div>
           </div>
