@@ -42,8 +42,8 @@ export function CategoryFilter({
                 {typeof count === "number" && (
                   <span
                     className={cn(
-                      "font-mono-meta text-[10px]",
-                      active ? "text-primary" : "text-muted-foreground/70",
+                      "font-label text-[10px]",
+                      active ? "text-primary" : "text-muted-foreground/75",
                     )}
                   >
                     {String(count).padStart(2, "0")}
@@ -54,7 +54,7 @@ export function CategoryFilter({
               <span
                 aria-hidden="true"
                 className={cn(
-                  "absolute inset-x-0 bottom-0 h-[1.5px] bg-primary transition-transform duration-300 ease-out origin-left",
+                  "absolute inset-x-0 bottom-0 h-[1.5px] origin-left bg-primary transition-transform duration-300 ease-out",
                   active ? "scale-x-100" : "scale-x-0",
                 )}
               />

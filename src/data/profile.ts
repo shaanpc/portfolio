@@ -1,8 +1,7 @@
 export const DESIGNER_PROFILE = {
   name: "Shan pc",
-  monogram: "Shan pc",
   role: "Graphic Designer & Visual Storyteller",
-  headline: "Brand identity, visual stories & campaigns crafted to stay in mind.",
+  headline: "Visual stories, brand identities & campaigns crafted to stay in mind.",
   intro:
     "Independent graphic designer working across brand identity, packaging, illustrated storytelling, social media campaigns, and cinematic photo manipulation.",
   location: "Kozhikode, India",
@@ -18,6 +17,7 @@ export const DESIGNER_PROFILE = {
     behance: "https://www.behance.net/shaanpc",
     contra: "https://contra.com/shan_pc_xwkl28gv",
     linkedin: "https://www.linkedin.com/in/shanpc",
+    instagram: "https://www.instagram.com/shaan.pc",
     x: "https://x.com/shanpc_",
     email: "connectshanpc@gmail.com",
     resume: "/resume.pdf",
@@ -26,26 +26,32 @@ export const DESIGNER_PROFILE = {
     {
       title: "Graphic Design",
       detail: "Posters, typographic compositions, print collateral & visual systems",
+      examples: "Dot To Dot, Art Portfolio",
     },
     {
       title: "Branding & Identity",
       detail: "Logotypes, monograms, event branding, signage & brand guidelines",
+      examples: "Max Builders, Dot To Dot",
     },
     {
-      title: "Illustration & Storytelling",
+      title: "Illustration & Visual Storytelling",
       detail: "Sketchbook-to-digital narrative series, character illustration & storybooks",
+      examples: "Traces",
     },
     {
       title: "Packaging Design",
       detail: "Structural box concepts, dieline presentation, foil & Spot UV finishes",
+      examples: "Plug (Goldmedal)",
     },
     {
       title: "Social Media & Ad Campaigns",
       detail: "Conceptual carousels, visual metaphor campaigns & festive brand ads",
+      examples: "Dyson, Philips, Thaen Mittai, Fevicol, Happydent",
     },
     {
       title: "Photo Manipulation",
       detail: "Cinematic compositing, lighting integration, color grading & surreal scenes",
+      examples: "Aladin, Ratatouille Reimagined",
     },
   ],
 } as const;

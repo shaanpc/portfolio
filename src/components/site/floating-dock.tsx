@@ -1,8 +1,7 @@
-import { ArrowUp, Instagram, Mail, Moon, Sun } from "lucide-react";
+import { ArrowUp, Mail, Moon, Sun } from "lucide-react";
 import { useEffect, useState } from "react";
 import { DESIGNER_PROFILE } from "@/data/profile";
 import { cn } from "@/lib/utils";
-import { useIntroReady } from "./site-preloader";
 
 type Theme = "light" | "dark";
 
@@ -50,8 +49,26 @@ function LinkedInIcon({ className }: { className?: string }) {
   );
 }
 
+function InstagramIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={1.75}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+      className={className}
+    >
+      <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
+      <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+      <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
+    </svg>
+  );
+}
+
 export function FloatingDock() {
-  const introReady = useIntroReady();
   const [theme, setTheme] = useState<Theme>(() => readInitialTheme());
   const [atTop, setAtTop] = useState(true);
 
@@ -82,47 +99,39 @@ export function FloatingDock() {
   }
 
   const iconButtonClass =
-    "floating-dock-icon relative z-10 inline-flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center rounded-full transition-colors duration-200 hover:bg-[var(--dock-hover)] active:scale-95 focus-visible:outline-2 focus-visible:outline-foreground";
+    "floating-dock-icon relative z-10 inline-flex h-8 w-8 sm:h-10 sm:w-10 shrink-0 items-center justify-center rounded-full transition-colors duration-200 active:scale-95 focus-visible:outline-2 focus-visible:outline-foreground";
 
   return (
     <div
-      className="pointer-events-none fixed inset-x-0 bottom-[max(1.25rem,env(safe-area-inset-bottom))] z-50 flex justify-center px-3"
+      className="pointer-events-none fixed bottom-6 left-1/2 z-50 w-max max-w-[calc(100vw-1rem)] -translate-x-1/2"
       role="region"
       aria-label="Quick links and appearance"
     >
-      <div
-        className={cn(
-          "floating-dock-pill pointer-events-auto flex max-w-full items-center gap-0.5 rounded-full border p-1.5 sm:gap-1.5 sm:p-2",
-          introReady ? "dock-enter" : "opacity-0",
-        )}
-      >
-        {/* Dark-mode travelling white glow layers (hidden in light mode) */}
-        <span aria-hidden="true" className="dock-halo-glow" />
+      <div className="floating-dock-pill dock-enter pointer-events-auto flex items-center gap-0.5 rounded-full p-1.5 sm:gap-1.5 sm:p-2">
         <span aria-hidden="true" className="dock-dark-surface" />
-        <span aria-hidden="true" className="dock-border-glow" />
 
-        {/* Resume pill button */}
+        {/* Black Resume pill button */}
         <a
           href={DESIGNER_PROFILE.links.resume}
           target="_blank"
           rel="noopener noreferrer"
           aria-label="Open Resume PDF in a new tab"
-          className="floating-dock-resume relative z-10 mr-1 inline-flex h-9 shrink-0 items-center justify-center rounded-full bg-foreground px-4 text-xs font-medium tracking-[-0.01em] text-background transition-colors duration-200 active:scale-95 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-foreground sm:mr-1.5 sm:h-10 sm:px-6 sm:text-[13px]"
+          className="floating-dock-resume relative z-10 mr-0.5 inline-flex h-8 shrink-0 items-center justify-center rounded-full px-3.5 text-xs font-medium tracking-[-0.01em] transition-colors duration-200 active:scale-95 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-foreground sm:mr-1.5 sm:h-10 sm:px-6 sm:text-[13px]"
         >
           Resume
         </a>
 
-        {/* 1. Email icon */}
+        {/* Email icon */}
         <a
           href={`mailto:${DESIGNER_PROFILE.links.email}`}
           aria-label={`Email ${DESIGNER_PROFILE.name} at ${DESIGNER_PROFILE.links.email}`}
           title={DESIGNER_PROFILE.links.email}
           className={iconButtonClass}
         >
-          <Mail className="h-[18px] w-[18px] stroke-[1.75]" aria-hidden="true" />
+          <Mail className="h-4 w-4 sm:h-[18px] sm:w-[18px] stroke-[1.75]" aria-hidden="true" />
         </a>
 
-        {/* 2. X (Twitter) icon */}
+        {/* X icon */}
         <a
           href={DESIGNER_PROFILE.links.x}
           target="_blank"
@@ -131,10 +140,10 @@ export function FloatingDock() {
           title="X"
           className={iconButtonClass}
         >
-          <XIcon className="h-[17px] w-[17px]" />
+          <XIcon className="h-[15px] w-[15px] sm:h-[17px] sm:w-[17px]" />
         </a>
 
-        {/* 3. LinkedIn icon */}
+        {/* LinkedIn icon */}
         <a
           href={DESIGNER_PROFILE.links.linkedin}
           target="_blank"
@@ -143,28 +152,28 @@ export function FloatingDock() {
           title="LinkedIn"
           className={iconButtonClass}
         >
-          <LinkedInIcon className="h-[18px] w-[18px]" />
+          <LinkedInIcon className="h-4 w-4 sm:h-[18px] sm:w-[18px]" />
         </a>
 
-        {/* 4. Instagram icon */}
+        {/* Instagram icon */}
         <a
-          href="https://www.instagram.com/shaan.pc"
+          href={DESIGNER_PROFILE.links.instagram}
           target="_blank"
           rel="noopener noreferrer"
           aria-label="Instagram"
           title="Instagram"
           className={iconButtonClass}
         >
-          <Instagram className="h-[18px] w-[18px] stroke-[1.75]" aria-hidden="true" />
+          <InstagramIcon className="h-4 w-4 sm:h-[18px] sm:w-[18px]" />
         </a>
 
-        {/* 5. Thin vertical separator */}
+        {/* Vertical divider */}
         <span
           aria-hidden="true"
-          className="floating-dock-separator relative z-10 mx-1 h-4 w-px shrink-0 sm:mx-1.5"
+          className="floating-dock-separator relative z-10 mx-0.5 h-4 w-px shrink-0 sm:mx-1.5"
         />
 
-        {/* 6. Theme toggle (Sun/Moon) */}
+        {/* Dark/light mode toggle */}
         <button
           type="button"
           onClick={toggleTheme}
@@ -174,14 +183,14 @@ export function FloatingDock() {
         >
           <span className="inline-flex transition-transform duration-300 ease-out">
             {theme === "light" ? (
-              <Moon className="h-[18px] w-[18px] stroke-[1.75]" aria-hidden="true" />
+              <Moon className="h-4 w-4 sm:h-[18px] sm:w-[18px] stroke-[1.75]" aria-hidden="true" />
             ) : (
-              <Sun className="h-[18px] w-[18px] stroke-[1.75]" aria-hidden="true" />
+              <Sun className="h-4 w-4 sm:h-[18px] sm:w-[18px] stroke-[1.75]" aria-hidden="true" />
             )}
           </span>
         </button>
 
-        {/* 7. Back-to-top arrow */}
+        {/* Back-to-top arrow */}
         <button
           type="button"
           onClick={handleBackToTop}
@@ -193,7 +202,7 @@ export function FloatingDock() {
             atTop && "opacity-90 hover:opacity-100",
           )}
         >
-          <ArrowUp className="h-[18px] w-[18px] stroke-[1.85]" aria-hidden="true" />
+          <ArrowUp className="h-4 w-4 sm:h-[18px] sm:w-[18px] stroke-[1.85]" aria-hidden="true" />
         </button>
       </div>
     </div>

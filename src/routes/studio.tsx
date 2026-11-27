@@ -14,10 +14,10 @@ import {
   Upload,
 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
-import { SiteFooter } from "@/components/site/site-footer";
 import {
   DEFAULT_CATEGORIES,
   createWorkSlug,
+  ensureWorksData,
   getSeedWorks,
   saveWorks,
   uploadArtworkFile,
@@ -34,7 +34,7 @@ export const Route = createFileRoute("/studio")({
   validateSearch: (search: Record<string, unknown>): StudioSearch => ({
     edit: typeof search.edit === "string" ? search.edit : undefined,
   }),
-  loader: ({ context }) => context.queryClient.ensureQueryData(worksQueryOptions()),
+  loader: ({ context }) => ensureWorksData(context.queryClient),
   component: StudioPage,
 });
 
@@ -154,7 +154,7 @@ function StudioPage() {
     }
   }
 
-  function handleSubmit(e: React.FormEvent) {
+  function handleSubmit(e: React.SyntheticEvent<HTMLFormElement>) {
     e.preventDefault();
     setErrorMessage(null);
 
@@ -284,8 +284,8 @@ function StudioPage() {
       <main className="mx-auto max-w-[1380px] px-6 py-12 md:px-12 md:py-16">
         <div className="flex flex-col gap-6 border-b border-rule pb-8 lg:flex-row lg:items-end lg:justify-between">
           <div>
-            <p className="font-mono-meta text-primary">Archive Studio</p>
-            <h1 className="mt-2 font-display text-4xl font-medium tracking-tight md:text-5xl">
+            <p className="font-label text-primary">Archive Studio</p>
+            <h1 className="mt-2 font-heading text-4xl font-medium tracking-tight md:text-5xl">
               Manage Portfolio Works
             </h1>
             <p className="mt-3 max-w-xl text-sm leading-relaxed text-muted-foreground">
@@ -367,10 +367,10 @@ function StudioPage() {
             <form onSubmit={handleSubmit} className="border border-rule bg-card p-6 md:p-8">
               <div className="flex items-center justify-between border-b border-rule pb-4">
                 <div>
-                  <p className="font-mono-meta text-[10px] text-primary">
+                  <p className="font-label text-[10px] text-primary">
                     {form.id ? "Editing Work" : "Add New Work"}
                   </p>
-                  <h2 className="mt-1 font-display text-2xl font-medium">
+                  <h2 className="mt-1 font-heading text-2xl font-medium">
                     {form.id ? form.title || "Untitled" : "New Entry"}
                   </h2>
                 </div>
@@ -390,7 +390,7 @@ function StudioPage() {
                   <div>
                     <label
                       htmlFor="work-title"
-                      className="block font-mono-meta text-[10px] text-muted-foreground"
+                      className="block font-label text-[10px] text-muted-foreground"
                     >
                       Title *
                     </label>
@@ -407,7 +407,7 @@ function StudioPage() {
                   <div>
                     <label
                       htmlFor="work-subtitle"
-                      className="block font-mono-meta text-[10px] text-muted-foreground"
+                      className="block font-label text-[10px] text-muted-foreground"
                     >
                       Subtitle
                     </label>
@@ -426,7 +426,7 @@ function StudioPage() {
                   <div>
                     <label
                       htmlFor="work-category"
-                      className="block font-mono-meta text-[10px] text-muted-foreground"
+                      className="block font-label text-[10px] text-muted-foreground"
                     >
                       Category *
                     </label>
@@ -448,7 +448,7 @@ function StudioPage() {
                   <div>
                     <label
                       htmlFor="work-year"
-                      className="block font-mono-meta text-[10px] text-muted-foreground"
+                      className="block font-label text-[10px] text-muted-foreground"
                     >
                       Year
                     </label>
@@ -467,7 +467,7 @@ function StudioPage() {
                   <div>
                     <label
                       htmlFor="work-custom-cat"
-                      className="block font-mono-meta text-[10px] text-muted-foreground"
+                      className="block font-label text-[10px] text-muted-foreground"
                     >
                       Custom Category Name *
                     </label>
@@ -486,7 +486,7 @@ function StudioPage() {
                   <div>
                     <label
                       htmlFor="work-medium"
-                      className="block font-mono-meta text-[10px] text-muted-foreground"
+                      className="block font-label text-[10px] text-muted-foreground"
                     >
                       Tools / Medium
                     </label>
@@ -503,7 +503,7 @@ function StudioPage() {
                   <div>
                     <label
                       htmlFor="work-client"
-                      className="block font-mono-meta text-[10px] text-muted-foreground"
+                      className="block font-label text-[10px] text-muted-foreground"
                     >
                       Client / Type
                     </label>
@@ -521,7 +521,7 @@ function StudioPage() {
                 <div>
                   <label
                     htmlFor="work-behance"
-                    className="block font-mono-meta text-[10px] text-muted-foreground"
+                    className="block font-label text-[10px] text-muted-foreground"
                   >
                     Behance URL
                   </label>
@@ -536,7 +536,7 @@ function StudioPage() {
                 </div>
 
                 <div>
-                  <span className="block font-mono-meta text-[10px] text-muted-foreground">
+                  <span className="block font-label text-[10px] text-muted-foreground">
                     Cover Artwork *
                   </span>
 
@@ -582,7 +582,7 @@ function StudioPage() {
                         <span className="text-sm font-medium">
                           {uploading ? "Uploading…" : "Click to upload or drop an artwork image"}
                         </span>
-                        <span className="font-mono-meta text-[10px]">
+                        <span className="font-label text-[10px]">
                           PNG, JPG, WebP, GIF, SVG
                         </span>
                       </button>
@@ -612,7 +612,7 @@ function StudioPage() {
                 <div>
                   <label
                     htmlFor="work-description"
-                    className="block font-mono-meta text-[10px] text-muted-foreground"
+                    className="block font-label text-[10px] text-muted-foreground"
                   >
                     Summary
                   </label>
@@ -629,7 +629,7 @@ function StudioPage() {
                 <div>
                   <label
                     htmlFor="work-story"
-                    className="block font-mono-meta text-[10px] text-muted-foreground"
+                    className="block font-label text-[10px] text-muted-foreground"
                   >
                     Process &amp; Story
                   </label>
@@ -670,7 +670,7 @@ function StudioPage() {
 
           <section className="lg:col-span-7">
             <div className="flex flex-col gap-4 border-b border-rule pb-4 sm:flex-row sm:items-center sm:justify-between">
-              <p className="font-mono-meta text-[11px] text-muted-foreground">
+              <p className="font-label text-[11px] text-muted-foreground">
                 Archive ({listedWorks.length} of {works.length} works)
               </p>
 
@@ -695,7 +695,7 @@ function StudioPage() {
 
             {listedWorks.length === 0 ? (
               <div className="mt-8 border border-dashed border-rule p-12 text-center">
-                <p className="font-editorial text-3xl italic text-muted-foreground">
+                <p className="font-heading text-2xl text-muted-foreground">
                   No works in this filter.
                 </p>
               </div>
@@ -719,7 +719,7 @@ function StudioPage() {
                       />
 
                       <div className="min-w-0 flex-1">
-                        <div className="flex flex-wrap items-center gap-2 font-mono-meta text-[10px] text-muted-foreground">
+                        <div className="flex flex-wrap items-center gap-2 font-label text-[10px] text-muted-foreground">
                           <span>{String(globalIdx + 1).padStart(2, "0")}</span>
                           <span>·</span>
                           <span>{work.category}</span>
@@ -736,10 +736,10 @@ function StudioPage() {
                           )}
                         </div>
 
-                        <h3 className="mt-1 truncate font-display text-lg font-medium">
+                        <h3 className="mt-1 truncate font-heading text-lg font-medium">
                           {work.title}
                           {work.subtitle && (
-                            <span className="ml-2 font-editorial text-base italic text-muted-foreground">
+                            <span className="ml-2 text-sm font-normal text-muted-foreground">
                               — {work.subtitle}
                             </span>
                           )}
@@ -785,8 +785,8 @@ function StudioPage() {
                           <Star className="h-3.5 w-3.5" />
                         </button>
                         <Link
-                          to="/works/$workId"
-                          params={{ workId: work.id }}
+                          to="/work/$projectSlug"
+                          params={{ projectSlug: work.id }}
                           title="Open case study"
                           className="border border-rule p-2 text-muted-foreground transition-colors hover:border-foreground hover:text-foreground"
                         >
@@ -830,8 +830,6 @@ function StudioPage() {
           </section>
         </div>
       </main>
-
-      <SiteFooter />
     </div>
   );
 }

@@ -1,8 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { ProjectArchive } from "@/components/site/project-archive";
-import { SiteFooter } from "@/components/site/site-footer";
-import { worksQueryOptions } from "@/lib/works";
+import { ensureWorksData, worksQueryOptions } from "@/lib/works";
 
 export const Route = createFileRoute("/work/")({
   head: () => ({
@@ -15,17 +14,11 @@ export const Route = createFileRoute("/work/")({
       },
     ],
   }),
-  loader: ({ context }) => context.queryClient.ensureQueryData(worksQueryOptions()),
+  loader: ({ context }) => ensureWorksData(context.queryClient),
   component: AllProjectsPage,
 });
 
 function AllProjectsPage() {
   const { data: works } = useSuspenseQuery(worksQueryOptions());
-
-  return (
-    <div className="min-h-screen">
-      <ProjectArchive works={works} />
-      <SiteFooter />
-    </div>
-  );
+  return <ProjectArchive works={works} />;
 }

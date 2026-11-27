@@ -14,17 +14,17 @@ export function SiteFooter() {
       <div className="mx-auto max-w-[1380px] px-6 pb-28 pt-20 md:px-14 md:pb-32 md:pt-28 lg:px-16">
         <div className="grid gap-12 md:grid-cols-12 md:items-end">
           <div className="md:col-span-7">
-            <Reveal variant="fade" delay={0}>
-              <p className="font-mono-meta text-primary">Contact</p>
+            <Reveal delay={0}>
+              <p className="font-label text-primary">Contact</p>
             </Reveal>
-            <h2 className="mt-4 font-display text-4xl leading-[1.06] font-normal text-foreground sm:text-5xl md:text-6xl">
-              <Reveal variant="line" delay={80}>
+            <h2 className="mt-4 font-heading text-4xl font-medium leading-[1.06] text-foreground sm:text-5xl md:text-6xl">
+              <Reveal delay={80}>
                 What shall we{" "}
-                <span className="font-editorial italic font-normal text-primary">create</span>{" "}
+                <span className="italic font-normal text-muted-foreground">create</span>{" "}
                 next?
               </Reveal>
             </h2>
-            <Reveal variant="fade" delay={160}>
+            <Reveal delay={160}>
               <p className="mt-5 max-w-lg text-base leading-relaxed text-muted-foreground">
                 {DESIGNER_PROFILE.availability} for brand identity, packaging concepts, illustrated
                 storytelling, and creative campaign direction.
@@ -33,7 +33,7 @@ export function SiteFooter() {
           </div>
 
           <div className="flex flex-col items-start gap-4 md:col-span-5 md:items-end">
-            <Reveal variant="up" delay={160} className="w-full md:max-w-xs">
+            <Reveal delay={160} className="w-full md:max-w-xs">
               <a
                 href={DESIGNER_PROFILE.links.behance}
                 target="_blank"
@@ -47,7 +47,7 @@ export function SiteFooter() {
                 />
               </a>
             </Reveal>
-            <Reveal variant="up" delay={240} className="w-full md:max-w-xs">
+            <Reveal delay={240} className="w-full md:max-w-xs">
               <a
                 href={DESIGNER_PROFILE.links.contra}
                 target="_blank"
@@ -64,41 +64,41 @@ export function SiteFooter() {
           </div>
         </div>
 
-        <Reveal variant="fade" delay={200}>
+        <Reveal delay={200}>
           <div className="mt-16 flex flex-col gap-4 border-t border-rule pt-8 text-xs text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
-          <div className="flex flex-wrap items-center gap-x-4 gap-y-1">
-            <span>
-              © {year} {DESIGNER_PROFILE.name}
-            </span>
-            <span aria-hidden="true">·</span>
-            <span>{DESIGNER_PROFILE.location}</span>
-          </div>
+            <div className="flex flex-wrap items-center gap-x-4 gap-y-1">
+              <span>
+                © {year} {DESIGNER_PROFILE.name}
+              </span>
+              <span aria-hidden="true">·</span>
+              <span>{DESIGNER_PROFILE.location}</span>
+            </div>
 
-          <div className="flex flex-wrap items-center gap-6">
-            <a href="/#things-i-do" className="transition-colors hover:text-foreground">
-              Things I Do
-            </a>
-            <Link to="/work" className="transition-colors hover:text-foreground">
-              All Projects
-            </Link>
-            <a href="/#experience" className="transition-colors hover:text-foreground">
-              Experience
-            </a>
-            <Link to="/studio" className="transition-colors hover:text-foreground">
-              Archive Studio
-            </Link>
-            <a
-              href="#top"
-              onClick={(e) => {
-                e.preventDefault();
-                window.scrollTo({ top: 0, behavior: "smooth" });
-              }}
-              className="transition-colors hover:text-foreground"
-            >
-              Back to top ↑
-            </a>
+            <div className="flex flex-wrap items-center gap-6">
+              <a href="/#work" className="transition-colors hover:text-foreground">
+                Things I Do
+              </a>
+              <Link to="/work" className="transition-colors hover:text-foreground">
+                All Projects
+              </Link>
+              <a href="/#skills" className="transition-colors hover:text-foreground">
+                Service
+              </a>
+              <Link to="/studio" className="transition-colors hover:text-foreground">
+                Archive Studio
+              </Link>
+              <a
+                href="#top"
+                onClick={(e) => {
+                  e.preventDefault();
+                  window.scrollTo({ top: 0, behavior: "smooth" });
+                }}
+                className="transition-colors hover:text-foreground"
+              >
+                Back to top ↑
+              </a>
+            </div>
           </div>
-        </div>
         </Reveal>
       </div>
     </footer>

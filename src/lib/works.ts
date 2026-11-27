@@ -1,4 +1,4 @@
-import { queryOptions } from "@tanstack/react-query";
+import { queryOptions, type QueryClient } from "@tanstack/react-query";
 import seedWorks from "@/data/works.json";
 
 export interface Work {
@@ -175,6 +175,13 @@ export function worksQueryOptions() {
     queryKey: ["works"],
     queryFn: fetchWorks,
     staleTime: 1000 * 30,
+  });
+}
+
+export function ensureWorksData(queryClient: QueryClient): Promise<Work[]> {
+  return queryClient.query({
+    ...worksQueryOptions(),
+    staleTime: "static",
   });
 }
 
