@@ -39,7 +39,7 @@ function Index() {
         id="overview"
         className="mx-auto flex min-h-[calc(100vh-5rem)] max-w-[1360px] flex-col justify-end overflow-x-clip px-6 pb-0 pt-4 md:px-12 md:pt-6 lg:justify-between lg:px-16"
       >
-        <div className="grid flex-1 items-stretch gap-8 lg:min-h-[clamp(520px,calc(100vh-6rem),690px)] lg:grid-cols-12 lg:gap-8">
+        <div className="grid flex-1 items-stretch gap-8 lg:min-h-[calc(100vh-5.5rem)] lg:grid-cols-12 lg:gap-8">
           {/* Left Typographic Identity (Vertically Balanced) + Bottom-Left Description */}
           <div className="flex flex-col justify-between gap-12 pb-2 pt-6 sm:pt-10 lg:col-span-6 lg:gap-16 lg:pb-16 lg:pt-28">
             <h1 className="font-hero text-[clamp(2.1rem,5vw,4.45rem)] font-bold uppercase leading-[1.06] tracking-[-0.015em] text-foreground">
@@ -69,23 +69,30 @@ function Index() {
 
           {/* Right Portrait Cutout (object-contain) with Smooth Bottom White Gradient Fade */}
           <div
-            className="flex items-end justify-center self-end lg:col-span-6 lg:justify-end animate-soft-enter"
+            className="flex min-w-0 w-full items-end justify-end self-end lg:col-span-6 lg:pr-6 xl:pr-10 animate-soft-enter"
             style={{ animationDelay: "140ms" }}
           >
-            <div className="relative flex h-[390px] w-full max-w-[460px] items-end justify-center sm:h-[490px] lg:h-[clamp(520px,calc(100vh-5.5rem),690px)] lg:max-w-[560px] lg:justify-end">
+            <div className="relative flex h-[340px] w-full min-w-0 items-end justify-end sm:h-[460px] lg:h-[clamp(600px,90vh,860px)]">
+              {/* Background bloom at both shoulder positions */}
+              <div
+                aria-hidden="true"
+                className="hero-portrait-shoulder-glow pointer-events-none absolute inset-0 z-0"
+              />
+              {/* Portrait — drop-shadow filter traces the transparent PNG outline for rim glow */}
               <img
                 src="/shan-portrait.png"
                 alt="Shan Mohammed pc — Graphic Designer"
-                width={696}
-                height={835}
+                width={1656}
+                height={1076}
                 loading="eager"
                 decoding="sync"
                 fetchPriority="high"
-                className="hero-portrait-mask block h-full w-auto max-w-full object-contain object-bottom"
+                className="hero-portrait-mask hero-portrait-glow pointer-events-none relative z-[1] block h-full w-auto max-w-none object-contain object-bottom"
               />
+              {/* Bottom white mist — dissolves portrait into page background */}
               <div
                 aria-hidden="true"
-                className="hero-portrait-mist pointer-events-none absolute inset-x-0 bottom-0 h-[34%]"
+                className="hero-portrait-mist pointer-events-none absolute inset-x-0 bottom-0 z-[2] h-[38%]"
               />
             </div>
           </div>

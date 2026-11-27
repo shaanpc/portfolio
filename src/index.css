@@ -149,6 +149,45 @@
     );
 }
 
+/* Shoulder glow — white rim light that follows the portrait silhouette + background blooms */
+
+/* drop-shadow on the <img> traces the transparent PNG outline exactly */
+.hero-portrait-glow {
+  filter:
+    drop-shadow(0 0 18px rgba(255, 255, 255, 1))
+    drop-shadow(0 0 42px rgba(255, 255, 255, 0.82))
+    drop-shadow(0 0 72px rgba(255, 255, 255, 0.5));
+}
+
+/* Background bloom divs behind the portrait at both shoulder positions */
+.hero-portrait-shoulder-glow {
+  background:
+    /* left shoulder bloom */
+    radial-gradient(
+      ellipse 70% 52% at 18% 74%,
+      rgba(255, 255, 255, 0.95) 0%,
+      rgba(255, 255, 255, 0.55) 28%,
+      rgba(255, 255, 255, 0.18) 54%,
+      transparent 72%
+    ),
+    /* right shoulder bloom */
+    radial-gradient(
+      ellipse 62% 46% at 94% 70%,
+      rgba(255, 255, 255, 0.90) 0%,
+      rgba(255, 255, 255, 0.48) 30%,
+      rgba(255, 255, 255, 0.14) 56%,
+      transparent 74%
+    );
+}
+
+/* Hide in dark mode */
+:root[data-theme="dark"] .hero-portrait-glow {
+  filter: none;
+}
+:root[data-theme="dark"] .hero-portrait-shoulder-glow {
+  opacity: 0;
+}
+
 /* Subtle architectural transitions */
 @keyframes soft-enter {
   from {
