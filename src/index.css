@@ -16,7 +16,7 @@
 :root {
   color-scheme: light;
   --color-section-alt: #ffffff;
-  --color-section-card: #ffffff;
+  --color-section-card: #f6f6f6;
   --color-section-card-border: rgba(21, 21, 19, 0.06);
   --dock-bg: rgba(248, 246, 241, 0.72);
   --dock-border: rgba(21, 21, 19, 0.1);
@@ -56,6 +56,7 @@
     background-color: var(--color-background);
     color: var(--color-foreground);
     font-family: "DM Sans", system-ui, -apple-system, sans-serif;
+    overflow-x: clip;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
@@ -65,7 +66,6 @@
     min-height: 100vh;
     background-color: var(--color-background);
     color: var(--color-foreground);
-    overflow-x: clip;
   }
 
   ::selection {

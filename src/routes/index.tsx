@@ -93,11 +93,11 @@ function Index() {
         </div>
       </section>
 
-      {/* Selected Work Gallery */}
-      <SelectedWork works={works} />
-
       {/* Editorial About Card Section */}
       <AboutSection />
+
+      {/* Selected Work Gallery */}
+      <SelectedWork works={works} />
 
       {/* Skills & Expertise Section */}
       <section id="skills" className="scroll-mt-20 border-t border-rule">

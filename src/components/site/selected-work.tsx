@@ -1,8 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { ArrowRight, ArrowUpRight } from "lucide-react";
-import { useEffect, useMemo, useRef, useState } from "react";
-import { categoriesInUse, filterWorks, type Work } from "@/lib/works";
-import { CategoryFilter } from "./category-filter";
+import { useEffect, useMemo, useRef } from "react";
+import { type Work } from "@/lib/works";
 import { Reveal } from "./scroll-reveal";
 
 interface SelectedWorkProps {
@@ -27,26 +26,10 @@ function clamp(value: number, min: number, max: number) {
 }
 
 export function SelectedWork({ works }: SelectedWorkProps) {
-  const [activeCategory, setActiveCategory] = useState("All");
   const slotRefs = useRef<(HTMLDivElement | null)[]>([]);
   const cardRefs = useRef<(HTMLElement | null)[]>([]);
 
-  const categories = useMemo(() => categoriesInUse(works), [works]);
-
-  const counts = useMemo(() => {
-    const map: Record<string, number> = { All: works.length };
-    for (const cat of categories) {
-      if (cat !== "All") {
-        map[cat] = works.filter((w) => w.category === cat).length;
-      }
-    }
-    return map;
-  }, [categories, works]);
-
-  const visibleWorks = useMemo(
-    () => filterWorks(works, activeCategory),
-    [works, activeCategory],
-  );
+  const visibleWorks = works;
 
   const indexById = useMemo(() => new Map(works.map((w, i) => [w.id, i])), [works]);
 
@@ -177,35 +160,30 @@ export function SelectedWork({ works }: SelectedWorkProps) {
           </Reveal>
         </div>
 
-        {/* Discipline Filter Tabs */}
-        <Reveal variant="fade" delay={180} className="mt-10 md:mt-12">
-          <CategoryFilter
-            categories={categories}
-            activeCategory={activeCategory}
-            onSelect={setActiveCategory}
-            counts={counts}
-          />
-        </Reveal>
-
         {visibleWorks.length === 0 ? (
           <p className="py-20 text-center text-lg text-[#66645e]">
-            No projects published in {activeCategory} yet.
+            No projects published yet.
           </p>
         ) : (
-          <div key={activeCategory} className="mt-12 space-y-8 md:mt-16 md:space-y-24 lg:space-y-28">
+          <div className="mt-12 space-y-8 md:mt-16 md:space-y-24 lg:space-y-28">
             {visibleWorks.map((work, pos) => {
               const displayIndex = (indexById.get(work.id) ?? pos) + 1;
               const num = String(displayIndex).padStart(2, "0");
               const tags = getWorkTags(work);
+              const isLast = pos === visibleWorks.length - 1;
 
-              return (
+              const cardNode = (
                 <div
                   key={work.id}
                   ref={(el) => {
                     slotRefs.current[pos] = el;
                   }}
-                  style={{ zIndex: pos + 1 }}
-                  className="md:sticky md:top-24"
+                  style={isLast ? undefined : { zIndex: pos + 1 }}
+                  className={
+                    isLast
+                      ? "md:sticky md:top-[max(6rem,calc(50vh-250px))] motion-reduce:md:static"
+                      : "md:sticky md:top-24 motion-reduce:md:static"
+                  }
                 >
                   <article
                     ref={(el) => {
@@ -317,6 +295,22 @@ export function SelectedWork({ works }: SelectedWorkProps) {
                       </div>
                     </div>
                   </article>
+                </div>
+              );
+
+              if (!isLast) return cardNode;
+
+              return (
+                <div
+                  key={work.id}
+                  style={{ zIndex: pos + 1 }}
+                  className="relative"
+                >
+                  {cardNode}
+                  <div
+                    aria-hidden="true"
+                    className="hidden md:block md:h-[100vh] motion-reduce:md:hidden"
+                  />
                 </div>
               );
             })}
